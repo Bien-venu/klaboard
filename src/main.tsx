@@ -3,11 +3,15 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { ThemeProvider } from "./components/theme-provider.tsx";
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "@/app/store";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="light">
-      <App />
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
     </ThemeProvider>
   </StrictMode>,
 );

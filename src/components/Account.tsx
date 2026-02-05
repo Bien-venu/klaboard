@@ -68,8 +68,8 @@ export function Accounts({ items }: { items: any[] }) {
                 items={subItems.map((i: { title: any }) => i.title)}
                 strategy={verticalListSortingStrategy}
               >
-                {subItems.map((subItem: { icon: any; title: string }) => (
-                  <SidebarMenuSubItem className="p-0">
+                {subItems.map((subItem: { icon: any; title: string }, index: number) => (
+                  <SidebarMenuSubItem className="p-0" key={index}>
                     <SidebarMenuSubButton asChild className="p-0">
                       <div
                         className={`flex items-center gap-2 rounded-xl p-0 px-0 py-2`}
