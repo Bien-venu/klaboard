@@ -16,9 +16,8 @@ export default function HumanResources() {
   const dispatch = useAppDispatch();
 
   const todoList = useSelector((state: RootState) => state.todo.todos);
-  const userList = useSelector((state: RootState) => state.user.users);
 
-  const [filter, setFilter] = useState("kanban");
+  const [filter, setFilter] = useState("list");
 
   const userLoading = useSelector((state: RootState) => state.user.loading);
   const todoLoading = useSelector((state: RootState) => state.todo.loading);
@@ -36,9 +35,6 @@ export default function HumanResources() {
       dispatch(fetchUser(id));
     });
   }, [todoList, dispatch]);
-
-  console.log(todoList);
-  console.log(userList);
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
@@ -58,10 +54,8 @@ export default function HumanResources() {
             </div>
           ) : (
             <div className="flex h-full w-full overflow-hidden">
-              {filter === "kanban" && (
-                <Kanban todoList={todoList} />
-              )}
-              {filter === "list" && <List />}
+              {filter === "kanban" && <Kanban todoList={todoList} />}
+              {filter === "list" && <List todoList={todoList} />}
               {filter === "calendar" && <Calendar />}
             </div>
           )}

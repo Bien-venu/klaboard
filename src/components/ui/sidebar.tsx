@@ -255,7 +255,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar, open } = useSidebar();
+  const { toggleSidebar, isMobile } = useSidebar();
 
   return (
     <Button
@@ -273,7 +273,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      {open ? (
+      {!isMobile ? (
         <HugeiconsIcon icon={ArrowLeftDoubleIcon} size={20} />
       ) : (
         <HugeiconsIcon icon={ArrowRightDoubleIcon} size={20} />

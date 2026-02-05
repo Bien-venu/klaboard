@@ -53,7 +53,7 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
   return (
     <div className="bg-background h-full w-full overflow-auto rounded-xl px-4">
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-4 gap-4 min-w-[1000px]">
           {columns.map((col) => (
             <Column key={col} id={col} tasks={tasks[col]} />
           ))}

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { RootState } from "@/app/store";
+import Bienvenu from "@/assets/images/Bienvenu.jpg";
+import Older from "@/assets/images/Older.png";
+import Doctor from "@/assets/images/doctor.png";
 import type { TodoItem } from "@/types/todo";
 import { useDraggable } from "@dnd-kit/core";
 import {
@@ -9,7 +11,24 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React from "react";
-import { useSelector } from "react-redux";
+
+const users: {
+  title: string;
+  icon: string;
+}[] = [
+  {
+    title: "Bienvenu",
+    icon: Older,
+  },
+  {
+    title: "Jean",
+    icon: Bienvenu,
+  },
+  {
+    title: "Emme",
+    icon: Doctor,
+  },
+];
 
 const columns = ["To-do", "On Progress", "Need Review", "Done"] as const;
 type ColumnType = (typeof columns)[number];
@@ -22,8 +41,6 @@ const TaskCard: React.FC<{ task: TodoItem; column: ColumnType }> = ({
     id: task.id,
     data: { column },
   });
-
-  const user = useSelector((state: RootState) => state.user.users[task.userId]);
 
   const style = {
     transform: transform
@@ -67,15 +84,17 @@ const TaskCard: React.FC<{ task: TodoItem; column: ColumnType }> = ({
             <HugeiconsIcon icon={AttachmentIcon} size={17} /> <span>8</span>
           </div>
         </div>
-        <div className="border-text/10 flex items-center justify-between overflow-hidden rounded-xl border">
-          {user ? (
-            <img
-              src={user.image}
-              className="ring-foreground size-8 rounded-md object-cover object-top ring-1"
-            />
-          ) : (
-            <div className="bg-background h-6 w-6 animate-pulse rounded-full" />
-          )}
+        <div className="border-text/10 flex items-center justify-between overflow-hidden rounded-xl">
+          <div className="flex -space-x-3">
+            {users.map((user, index) => (
+              <img
+                key={index}
+                src={user.icon}
+                alt={user.title}
+                className="ring-foreground size-8 rounded-md object-cover object-top ring-1"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
