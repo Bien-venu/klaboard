@@ -2,7 +2,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { SidebarMenuSubButton, SidebarMenuSubItem } from "./ui/sidebar";
 
 export function DraggableSubItem({ subItem }: { subItem: any }) {
@@ -25,9 +25,8 @@ export function DraggableSubItem({ subItem }: { subItem: any }) {
       {...listeners}
     >
       <SidebarMenuSubButton asChild>
-        <Link
-          to={subItem.url}
-          className={`flex items-center gap-2 rounded-xl px-0 py-2 ${isActive ? "border-text/20 text-text bg-foreground border" : ""}`}
+        <div
+          className={`flex items-center gap-2 cursor-pointer rounded-xl px-0 py-2 ${isActive ? "border-text/20 text-text bg-foreground border" : ""}`}
         >
           <GripVertical size={20} className="text-text/30" />
           <div className="flex items-center gap-2">
@@ -36,7 +35,7 @@ export function DraggableSubItem({ subItem }: { subItem: any }) {
             )}
             <span>{subItem.title}</span>
           </div>
-        </Link>
+        </div>
       </SidebarMenuSubButton>
     </SidebarMenuSubItem>
   );

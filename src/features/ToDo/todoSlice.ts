@@ -20,7 +20,6 @@ const todoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch
       .addCase(fetchTodos.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -34,12 +33,10 @@ const todoSlice = createSlice({
         state.error = action.payload as string;
       })
 
-      // Add
       .addCase(addTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
         state.todos.push(action.payload);
       })
 
-      // Update
       .addCase(updateTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
         const index = state.todos.findIndex((t) => t.id === action.payload.id);
         if (index !== -1) {
@@ -47,7 +44,6 @@ const todoSlice = createSlice({
         }
       })
 
-      // Delete
       .addCase(deleteTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
         state.todos = state.todos.filter((t) => t.id !== action.payload.id);
       });

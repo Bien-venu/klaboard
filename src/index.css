@@ -29,22 +29,24 @@ body {
   --color-review: var(--status-review);
   --color-done: var(--status-done);
   --color-special: var(--special);
-}
-
-/* Light Mode */
-.dark {
-  --background: #1f2937; /* dark gray background */
-  --foreground: #374151; /* darker card */
-  --text: #f9fafb; /* light text */
-  --header: #4b5563; /* dark header bar */
-  --status-todo: #9ca3af; /* keep neutral */
-  --status-progress: #60a5fa; /* lighter blue for contrast */
-  --status-review: #fbbf24; /* brighter amber */
-  --status-done: #34d399; /* lighter green */
-  --special: #9771fe; /* lighter green */
+  --color-error: var(--status-error); /* new red */
 }
 
 /* Dark Mode */
+.dark {
+  --background: #1f2937;
+  --foreground: #374151;
+  --text: #f9fafb;
+  --header: #4b5563;
+  --status-todo: #9ca3af;
+  --status-progress: #60a5fa;
+  --status-review: #fbbf24;
+  --status-done: #34d399;
+  --special: #9771fe;
+  --status-error: #ef4444; /* red for errors/deactivated */
+}
+
+/* Light Mode */
 .light {
   --background: #f5f5f5;
   --foreground: #ffffff;
@@ -54,8 +56,10 @@ body {
   --status-progress: #3b82f6;
   --status-review: #f59e0b;
   --status-done: #10b981;
-  --special: #9771fe; /* lighter green */
+  --special: #9771fe;
+  --status-error: #dc2626; /* red for errors/deactivated */
 }
+
 
 /* Theme transition effects */
 .theme-transition {

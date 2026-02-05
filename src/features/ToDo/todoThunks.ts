@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/features/todos/todoThunks.ts
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getTodosService,
@@ -8,20 +7,18 @@ import {
   deleteTodoService,
 } from "./todoService";
 
-// Get all todos
 export const fetchTodos = createAsyncThunk(
   "todos/fetchTodos",
   async (_, thunkAPI) => {
     try {
       const data = await getTodosService();
-      return data.todos; // return array of todos
+      return data.todos;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
   },
 );
 
-// Add new todo
 export const addTodo = createAsyncThunk(
   "todos/addTodo",
   async (
@@ -37,7 +34,6 @@ export const addTodo = createAsyncThunk(
   },
 );
 
-// Update todo
 export const updateTodo = createAsyncThunk(
   "todos/updateTodo",
   async ({ id, completed }: { id: number; completed: boolean }, thunkAPI) => {
@@ -50,7 +46,6 @@ export const updateTodo = createAsyncThunk(
   },
 );
 
-// Delete todo
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
   async (id: number, thunkAPI) => {

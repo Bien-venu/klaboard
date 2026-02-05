@@ -1,4 +1,3 @@
-// src/features/users/userSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { fetchUser } from "./userThunks";
 
@@ -13,17 +12,16 @@ export type User = {
   username: string;
   image: string;
   role: string;
-  // add other fields as needed
 };
 
 type UserState = {
-  user: User | null;
+  users: Record<number, User>;
   loading: boolean;
   error: string | null;
 };
 
 const initialState: UserState = {
-  user: null,
+  users: {},
   loading: false,
   error: null,
 };
@@ -33,7 +31,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     clearUser: (state) => {
-      state.user = null;
+      state.users = {};
       state.error = null;
       state.loading = false;
     },
@@ -45,7 +43,7 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchUser.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
+        state.users[action.payload.id] = action.payload;
         state.loading = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {

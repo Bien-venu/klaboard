@@ -32,22 +32,40 @@ const users: {
   },
 ];
 
-const Filter = () => {
+type FilterProps = {
+  filter: string;
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const Filter: React.FC<FilterProps> = ({ filter, setFilter }) => {
+  const handleFilter = (e: string) => {
+    setFilter(e);
+  };
+
   return (
     <div className="border-text/10 flex w-full flex-wrap items-center justify-between gap-4 border-b px-4 pb-4 lg:px-6">
       <div className="flex items-center gap-2">
         <div className="border-text/30 flex gap-1 rounded-lg border p-1.5">
           <HugeiconsIcon icon={MoreHorizontalIcon} size={17} />
         </div>
-        <div className="border-text/30 flex items-center gap-1 rounded-lg border p-1.5">
+        <div
+          onClick={() => handleFilter("kanban")}
+          className={` ${filter === "kanban" ? "text-text" : "text-text/30"} border-text/30 flex cursor-pointer items-center gap-1 rounded-lg border p-1.5`}
+        >
           <KanbanIcon size={17} />
           <span>Kanban</span>
         </div>
-        <div className="border-text/30 text-text/30 flex items-center gap-1 rounded-lg border p-1.5">
+        <div
+          onClick={() => handleFilter("list")}
+          className={` ${filter === "list" ? "text-text" : "text-text/30"} border-text/30 flex cursor-pointer items-center gap-1 rounded-lg border p-1.5`}
+        >
           <HugeiconsIcon icon={LeftToRightListBulletIcon} size={17} />
           <span>List</span>
         </div>
-        <div className="border-text/30 text-text/30 flex items-center gap-1 rounded-lg border p-1.5">
+        <div
+          onClick={() => handleFilter("calendar")}
+          className={` ${filter === "calendar" ? "text-text" : "text-text/30"} border-text/30 flex cursor-pointer items-center gap-1 rounded-lg border p-1.5`}
+        >
           <HugeiconsIcon icon={Calendar02Icon} size={17} />
           <span>Calendar</span>
         </div>
@@ -60,7 +78,7 @@ const Filter = () => {
             placeholder="Search here"
             className="placeholder-text/70 h-full"
           />
-          <div className="bg-background/20 flex items-center gap-1 rounded-lg p-0 px-1">
+          <div className="bg-background flex items-center gap-1 rounded-lg p-0 px-1">
             <HugeiconsIcon icon={CommandIcon} size={15} />
             <span>F</span>
           </div>
@@ -77,7 +95,7 @@ const Filter = () => {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <div className=" flex -space-x-3">
+        <div className="flex -space-x-3">
           {users.map((user, index) => (
             <img
               key={index}
