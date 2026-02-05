@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+@import "tailwindcss";
+
+@import "tw-animate-css";
+
+* {
+  font-family: "Quicksand", sans-serif;
+}
+
+body {
+  overflow: hidden;
+  height: 100vh;
+}
+
+:root {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-text: var(--text);
+  --color-header: var(--header);
+  --color-todo: var(--status-todo);
+  --color-progress: var(--status-progress);
+  --color-review: var(--status-review);
+  --color-done: var(--status-done);
+  --color-special: var(--special);
+}
+
+/* Light Mode */
+.dark {
+  --background: #1f2937; /* dark gray background */
+  --foreground: #374151; /* darker card */
+  --text: #f9fafb; /* light text */
+  --header: #4b5563; /* dark header bar */
+  --status-todo: #9ca3af; /* keep neutral */
+  --status-progress: #60a5fa; /* lighter blue for contrast */
+  --status-review: #fbbf24; /* brighter amber */
+  --status-done: #34d399; /* lighter green */
+  --special: #6333f3; /* lighter green */
+}
+
+/* Dark Mode */
+.light {
+  --background: #f5f5f5;
+  --foreground: #ffffff;
+  --text: #1f2937;
+  --header: #e5e7eb;
+  --status-todo: #9ca3af;
+  --status-progress: #3b82f6;
+  --status-review: #f59e0b;
+  --status-done: #10b981;
+  --special: #6333f3; /* lighter green */
+}
+
+/* Theme transition effects */
+.theme-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
