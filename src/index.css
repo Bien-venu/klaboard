@@ -40,7 +40,7 @@ body {
   --status-progress: #60a5fa; /* lighter blue for contrast */
   --status-review: #fbbf24; /* brighter amber */
   --status-done: #34d399; /* lighter green */
-  --special: #6333f3; /* lighter green */
+  --special: #9771fe; /* lighter green */
 }
 
 /* Dark Mode */
@@ -53,7 +53,7 @@ body {
   --status-progress: #3b82f6;
   --status-review: #f59e0b;
   --status-done: #10b981;
-  --special: #6333f3; /* lighter green */
+  --special: #9771fe; /* lighter green */
 }
 
 /* Theme transition effects */

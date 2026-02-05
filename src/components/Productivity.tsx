@@ -1,5 +1,3 @@
-import { IconInnerShadowTop } from "@tabler/icons-react";
-
 const Productivity = () => {
   return (
     <div className="h-fit px-4 py-1">
@@ -7,8 +5,12 @@ const Productivity = () => {
         <div className="relative flex h-24 items-end justify-center rounded-t-xl bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">
           <div className="bg-gradient-radial absolute inset-0 from-white/40 via-transparent to-transparent" />
 
-          <div className="bg-special absolute bottom-[-1.1rem] flex h-fit w-fit rounded-xl p-1.5 text-white">
-            <IconInnerShadowTop size={24} />
+          <div className="absolute bottom-[-1.1rem] h-fit w-fit rounded-xl bg-linear-to-b from-[#9771fe] to-[#6333f3] p-1.5 text-white">
+            <img
+              src="/klaboard.png"
+              alt="Klaboard"
+              className="size-6 rounded-md object-cover object-top"
+            />
           </div>
         </div>
 
