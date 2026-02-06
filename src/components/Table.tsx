@@ -74,7 +74,6 @@ const users: {
 import { useTranslation } from "react-i18next";
 import EditTodo from "./EditTodo";
 import DeleteTodo from "./Delete";
-// ... imports ...
 
 export const getColumns = (t: any): ColumnDef<TodoItem>[] => [
   {
