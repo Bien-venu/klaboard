@@ -1,7 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { TodoItem } from "@/types/todo";
-import { DndContext, closestCenter, useDroppable } from "@dnd-kit/core";
-import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
+import {
+  DndContext,
+  DragOverlay,
+  pointerWithin,
+  useDroppable,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
 import {
   Add01Icon,
   ChatEdit01Icon,
@@ -33,40 +42,130 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
     if (!over) return;
 
     const fromColumn = active.data.current?.column as ColumnType;
-    const toColumn = over.data.current?.column as ColumnType;
 
-    if (fromColumn && toColumn && fromColumn !== toColumn) {
-      const fromTasks = tasks[fromColumn].filter((t) => t.id !== active.id);
-      const movedTask = tasks[fromColumn].find((t) => t.id === active.id);
-      if (!movedTask) return;
+    // 👇 THIS is the missing logic
+    const toColumn =
+      (over.data.current?.column as ColumnType) ?? (over.id as ColumnType);
 
-      const toTasks = [...tasks[toColumn], movedTask];
+    if (!fromColumn || !toColumn) return;
 
-      setTasks({
-        ...tasks,
-        [fromColumn]: fromTasks,
-        [toColumn]: toTasks,
-      });
+    // SAME COLUMN → reorder
+    if (fromColumn === toColumn) {
+      const items = tasks[fromColumn];
+      const oldIndex = items.findIndex((i) => i.id === active.id);
+      const newIndex = items.findIndex((i) => i.id === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
+        setTasks({
+          ...tasks,
+          [fromColumn]: arrayMove(items, oldIndex, newIndex),
+        });
+      }
+      return;
     }
+
+    // DIFFERENT COLUMN → move
+    const fromItems = [...tasks[fromColumn]];
+    const toItems = [...tasks[toColumn]];
+
+    const activeIndex = fromItems.findIndex((i) => i.id === active.id);
+    if (activeIndex === -1) return;
+
+    const [movedItem] = fromItems.splice(activeIndex, 1);
+
+    const overIndex = toItems.findIndex((i) => i.id === over.id);
+
+    // 👇 drop on empty column → push to end
+    if (overIndex === -1) {
+      toItems.push(movedItem);
+    } else {
+      toItems.splice(overIndex, 0, movedItem);
+    }
+
+    setTasks({
+      ...tasks,
+      [fromColumn]: fromItems,
+      [toColumn]: toItems,
+    });
+  };
+
+  const [activeTask, setActiveTask] = useState<TodoItem | null>(null);
+
+  const handleDragOver = (event: any) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const fromColumn = active.data.current?.column as ColumnType;
+    const toColumn =
+      (over.data.current?.column as ColumnType) ?? (over.id as ColumnType);
+
+    if (!fromColumn || !toColumn || fromColumn === toColumn) return;
+
+    setTasks((prev) => {
+      const fromItems = [...prev[fromColumn]];
+      const toItems = [...prev[toColumn]];
+
+      const activeIndex = fromItems.findIndex((i) => i.id === active.id);
+      if (activeIndex === -1) return prev;
+
+      const [movedItem] = fromItems.splice(activeIndex, 1);
+
+      const overIndex = toItems.findIndex((i) => i.id === over.id);
+      if (overIndex === -1) {
+        toItems.push(movedItem);
+      } else {
+        toItems.splice(overIndex, 0, movedItem);
+      }
+
+      return {
+        ...prev,
+        [fromColumn]: fromItems,
+        [toColumn]: toItems,
+      };
+    });
+
+    active.data.current.column = toColumn;
   };
 
   return (
     <div className="bg-background h-full w-full overflow-auto rounded-xl px-4">
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-4 gap-4 min-w-[1000px]">
+      <DndContext
+        collisionDetection={pointerWithin}
+        onDragStart={(event) => {
+          const { active } = event;
+          const fromColumn = active.data.current?.column as ColumnType;
+          const task =
+            tasks[fromColumn].find((t) => t.id === active.id) || null;
+          setActiveTask(task);
+        }}
+        onDragOver={handleDragOver}
+        onDragEnd={(event) => {
+          handleDragEnd(event);
+          setActiveTask(null); // clear overlay
+        }}
+      >
+        <div className="grid min-w-[1000px] grid-cols-4 gap-4">
           {columns.map((col) => (
-            <Column key={col} id={col} tasks={tasks[col]} />
+            <Column key={col} id={col} tasks={tasks[col]} activeTask={null} />
           ))}
         </div>
+
+        {/* DragOverlay should be OUTSIDE the lists */}
+        <DragOverlay>
+          {activeTask ? (
+            <TaskCard task={activeTask} column={activeTask.column} />
+          ) : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );
 };
 
-const Column: React.FC<{ id: ColumnType; tasks: TodoItem[] }> = ({
-  id,
-  tasks,
-}) => {
+const Column: React.FC<{
+  activeTask: TodoItem | null;
+  id: ColumnType;
+  tasks: TodoItem[];
+}> = ({ id, tasks }) => {
   const { setNodeRef } = useDroppable({
     id,
     data: { column: id },

@@ -3,7 +3,8 @@ import Bienvenu from "@/assets/images/Bienvenu.jpg";
 import Older from "@/assets/images/Older.png";
 import Doctor from "@/assets/images/doctor.png";
 import type { TodoItem } from "@/types/todo";
-import { useDraggable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import {
   AttachmentIcon,
   Message02Icon,
@@ -37,15 +38,22 @@ const TaskCard: React.FC<{ task: TodoItem; column: ColumnType }> = ({
   task,
   column,
 }) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
     id: task.id,
     data: { column },
   });
 
   const style = {
-    transform: transform
-      ? `translate(${transform.x}px, ${transform.y}px)`
-      : undefined,
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
   };
 
   return (

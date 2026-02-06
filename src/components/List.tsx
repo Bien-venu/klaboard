@@ -1,23 +1,17 @@
-/* eslint-disable react-hooks/incompatible-library */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import type { TodoItem } from "@/types/todo";
-import { DndContext, closestCenter, useDroppable } from "@dnd-kit/core";
 import {
-  SortableContext,
-  arrayMove,
-  rectSortingStrategy,
-} from "@dnd-kit/sortable";
+  DndContext,
+  DragOverlay,
+  pointerWithin,
+  useDroppable,
+  type DragEndEvent
+} from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 import type { ColumnDef } from "@tanstack/react-table";
-import {
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import React, { useState } from "react";
-import TaskRow from "./TaskRow";
 import { GripVertical } from "lucide-react";
+import React, { useState } from "react";
 
 import {
   Collapsible,
@@ -35,17 +29,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-// ✅ shadcn table components
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import Bienvenu from "@/assets/images/Bienvenu.jpg";
 import Older from "@/assets/images/Older.png";
 import Doctor from "@/assets/images/doctor.png";
+import DraggedRowPreview from "./DraggedRowPreview";
+import { Tables } from "./Table";
 
 const users: {
   title: string;
@@ -70,9 +58,10 @@ type ColumnType = (typeof columns)[number];
 
 type KanbanProps = {
   todoList: TodoItem[];
+  loading: boolean;
 };
 
-const KanbanTables: React.FC<KanbanProps> = ({ todoList }) => {
+const KanbanTables: React.FC<KanbanProps> = ({ todoList, loading }) => {
   const [tasks, setTasks] = useState<Record<ColumnType, TodoItem[]>>({
     "To-do": todoList.filter((t) => !t.completed),
     "On Progress": [],
@@ -80,62 +69,67 @@ const KanbanTables: React.FC<KanbanProps> = ({ todoList }) => {
     Done: todoList.filter((t) => t.completed),
   });
 
-  const handleDragEnd = (event: any) => {
-    const { active, over } = event;
+  const handleDragEnd = ({ active, over }: DragEndEvent) => {
     if (!over) return;
 
     const fromColumn = active.data.current?.column as ColumnType;
     const toColumn = over.data.current?.column as ColumnType;
+
     if (!fromColumn || !toColumn) return;
 
-    // same column → reorder
     if (fromColumn === toColumn) {
       const oldIndex = tasks[fromColumn].findIndex((t) => t.id === active.id);
       const newIndex = tasks[toColumn].findIndex((t) => t.id === over.id);
 
-      if (oldIndex !== -1 && newIndex !== -1) {
-        const reordered = arrayMove(tasks[fromColumn], oldIndex, newIndex);
-        setTasks({ ...tasks, [fromColumn]: reordered });
+      if (newIndex !== -1) {
+        setTasks({
+          ...tasks,
+          [fromColumn]: arrayMove(tasks[fromColumn], oldIndex, newIndex),
+        });
       }
       return;
     }
 
-    // different column → move
-    const fromTasks = tasks[fromColumn].filter((t) => t.id !== active.id);
     const movedTask = tasks[fromColumn].find((t) => t.id === active.id);
     if (!movedTask) return;
 
-    const overIndex = tasks[toColumn].findIndex((t) => t.id === over.id);
-    let newToTasks;
-    if (overIndex >= 0) {
-      newToTasks = [
-        ...tasks[toColumn].slice(0, overIndex),
-        movedTask,
-        ...tasks[toColumn].slice(overIndex),
-      ];
-    } else {
-      newToTasks = [...tasks[toColumn], movedTask];
-    }
-
     setTasks({
       ...tasks,
-      [fromColumn]: fromTasks,
-      [toColumn]: newToTasks,
+      [fromColumn]: tasks[fromColumn].filter((t) => t.id !== active.id),
+      [toColumn]: [...tasks[toColumn], movedTask],
     });
   };
+  const [activeRow, setActiveRow] = useState<TodoItem | null>(null);
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <div className="bg-background flex h-full w-full flex-col gap-4 overflow-auto rounded-xl p-4">
+    <DndContext
+      collisionDetection={pointerWithin}
+      onDragStart={({ active }) => {
+        const column = active.data.current?.column as ColumnType;
+        const task = tasks[column]?.find((t) => t.id === active.id);
+        if (task) setActiveRow(task);
+      }}
+      onDragEnd={(event) => {
+        setActiveRow(null);
+        handleDragEnd(event);
+      }}
+    >
+      <div className="bg-background overflow-auto flex h-full w-full flex-col gap-4 rounded-xl p-4">
         {columns.map((col) => (
           <ColumnSection
             key={col}
             id={col}
             tasks={tasks[col]}
             tableColumns={tableColumns}
+            loading={loading}
           />
         ))}
       </div>
+
+      {/* ✅ ADD THIS RIGHT HERE */}
+      <DragOverlay>
+        {activeRow ? <DraggedRowPreview row={activeRow} /> : null}
+      </DragOverlay>
     </DndContext>
   );
 };
@@ -219,16 +213,12 @@ const ColumnSection: React.FC<{
   id: ColumnType;
   tasks: TodoItem[];
   tableColumns: ColumnDef<TodoItem>[];
-}> = ({ id, tasks, tableColumns }) => {
+  loading: boolean;
+}> = ({ id, tasks, loading }) => {
   const { setNodeRef } = useDroppable({ id, data: { column: id } });
-  const table = useReactTable({
-    data: tasks,
-    columns: tableColumns,
-    getCoreRowModel: getCoreRowModel(),
-  });
 
   return (
-    <div ref={setNodeRef}>
+    <div ref={setNodeRef} className="min-h-[150px">
       <Collapsible className="flex w-full flex-col gap-4" defaultOpen>
         <CollapsibleTrigger asChild>
           <div className="flex items-center justify-between gap-2">
@@ -268,32 +258,7 @@ const ColumnSection: React.FC<{
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <Table className="bg-foreground border-text/10 w-full overflow-hidden rounded-xl border text-sm">
-            <TableHeader>
-              {table.getHeaderGroups().map((hg) => (
-                <TableRow key={hg.id}>
-                  {hg.headers.map((header) => (
-                    <TableHead key={header.id} className="px-2 py-2 text-left">
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <SortableContext
-              items={tasks.map((t) => t.id)}
-              strategy={rectSortingStrategy}
-            >
-              <TableBody>
-                {table.getRowModel().rows.map((row) => (
-                  <TaskRow key={row.id} row={row} column={id} />
-                ))}
-              </TableBody>
-            </SortableContext>
-          </Table>
+          <Tables data={tasks} loading={loading} id={id} />
         </CollapsibleContent>
       </Collapsible>
     </div>

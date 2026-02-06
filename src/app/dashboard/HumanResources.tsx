@@ -11,6 +11,7 @@ import Kanban from "@/components/Kanban";
 import List from "@/components/List";
 import Calendar from "@/components/Calendar";
 import { ClipLoader } from "react-spinners";
+import type { TodoItem } from "@/types/todo";
 
 export default function HumanResources() {
   const dispatch = useAppDispatch();
@@ -54,8 +55,12 @@ export default function HumanResources() {
             </div>
           ) : (
             <div className="flex h-full w-full overflow-hidden">
-              {filter === "kanban" && <Kanban todoList={todoList} />}
-              {filter === "list" && <List todoList={todoList} />}
+              {filter === "kanban" && (
+                <Kanban todoList={todoList as TodoItem[]} />
+              )}
+              {filter === "list" && (
+                <List todoList={todoList as TodoItem[]} loading={todoLoading} />
+              )}
               {filter === "calendar" && <Calendar />}
             </div>
           )}

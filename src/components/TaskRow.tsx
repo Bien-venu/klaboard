@@ -6,11 +6,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React from "react";
 import { flexRender } from "@tanstack/react-table";
-import { TableCell } from "./ui/table";
+import { TableCell, TableRow } from "./ui/table";
 
-type ColumnType = "To-do" | "On Progress" | "Need Review" | "Done";
-
-const TaskRow: React.FC<{ row: Row<TodoItem>; column: ColumnType }> = ({
+const TaskRow: React.FC<{ row: Row<TodoItem>; column: string }> = ({
   row,
   column,
 }) => {
@@ -26,7 +24,7 @@ const TaskRow: React.FC<{ row: Row<TodoItem>; column: ColumnType }> = ({
   };
 
   return (
-    <tr
+    <TableRow
       ref={setNodeRef}
       style={style}
       {...attributes}
@@ -38,7 +36,7 @@ const TaskRow: React.FC<{ row: Row<TodoItem>; column: ColumnType }> = ({
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>
       ))}
-    </tr>
+    </TableRow>
   );
 };
 
