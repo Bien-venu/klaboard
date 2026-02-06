@@ -48,7 +48,7 @@ Start the development server:
 npm run dev
 ```
 
-By default, the app is available at: http://localhost:3000
+By default, the app is available at: http://localhost:3000 
 
 
 ---
