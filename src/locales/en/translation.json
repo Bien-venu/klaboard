@@ -1,0 +1,72 @@
+{
+  "title": "Task Manager",
+  "freeTrial": "Free Trial",
+  "addTask": "Add Task",
+  "editTask": "Edit Task",
+  "deleteTask": "Delete Task",
+  "user": {
+    "name": "Bienvenu"
+  },
+  "nav": {
+    "search": "Search",
+    "klaAi": "Kla AI",
+    "inbox": "Inbox",
+    "calendar": "Calendar",
+    "settings": "Settings & Preferences",
+    "sharedPages": "Shared Pages",
+    "hrTasksHub": "HR Tasks Hub",
+    "windahComp": "Windah Comp",
+    "noSpaceDev": "NoSpace Dev",
+    "privatePages": "Private Pages",
+    "dribbblePortfolio": "Dribbble Portfolio",
+    "accounts": "Accounts",
+    "new": "New"
+  },
+  "pageHeader": {
+    "title": "HR Tasks Hub",
+    "subtitle": "Welcome to the Human Resources hub"
+  },
+  "filter": {
+    "kanban": "Kanban",
+    "list": "List",
+    "calendar": "Calendar",
+    "searchPlaceholder": "Search here",
+    "filter": "Filter",
+    "sort": "Sort"
+  },
+  "kanban": {
+    "todo": "To-do",
+    "onProgress": "On Progress",
+    "needReview": "Need Review",
+    "done": "Done",
+    "card": {
+      "mockDate": "May 28, 2024"
+    }
+  },
+  "table": {
+    "headers": {
+      "name": "Name",
+      "date": "Date",
+      "status": "Status",
+      "attachment": "Attachment",
+      "people": "People"
+    },
+    "rows": {
+      "mockDateRange": "May 18, 2024 - May 26, 2024",
+      "mockAttachment": "requirements.doc"
+    },
+    "status": {
+      "low": "Low",
+      "high": "High"
+    }
+  },
+  "productivity": {
+    "title": "Maximize your productivity",
+    "description": "Boost your task management with advanced tools & features.",
+    "upgrade": "Upgrade"
+  },
+  "language": {
+    "english": "English",
+    "french": "Français"
+  }
+}

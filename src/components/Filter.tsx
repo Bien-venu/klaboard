@@ -37,7 +37,14 @@ type FilterProps = {
   setFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
+import { useTranslation } from "react-i18next";
+import AddTodos from "./AddTodo";
+
+// ... existing imports ...
+
 const Filter: React.FC<FilterProps> = ({ filter, setFilter }) => {
+  const { t } = useTranslation();
+
   const handleFilter = (e: string) => {
     setFilter(e);
   };
@@ -53,21 +60,21 @@ const Filter: React.FC<FilterProps> = ({ filter, setFilter }) => {
           className={` ${filter === "kanban" ? "text-text" : "text-text/30"} border-text/30 flex cursor-pointer items-center gap-1 rounded-lg border p-1.5`}
         >
           <KanbanIcon size={17} />
-          <span>Kanban</span>
+          <span>{t("filter.kanban")}</span>
         </div>
         <div
           onClick={() => handleFilter("list")}
           className={` ${filter === "list" ? "text-text" : "text-text/30"} border-text/30 flex cursor-pointer items-center gap-1 rounded-lg border p-1.5`}
         >
           <HugeiconsIcon icon={LeftToRightListBulletIcon} size={17} />
-          <span>List</span>
+          <span>{t("filter.list")}</span>
         </div>
         <div
           onClick={() => handleFilter("calendar")}
           className={` ${filter === "calendar" ? "text-text" : "text-text/30"} border-text/30 flex cursor-pointer items-center gap-1 rounded-lg border p-1.5`}
         >
           <HugeiconsIcon icon={Calendar02Icon} size={17} />
-          <span>Calendar</span>
+          <span>{t("filter.calendar")}</span>
         </div>
       </div>
       <div className="ml-auto flex flex-wrap items-center gap-2">
@@ -75,7 +82,7 @@ const Filter: React.FC<FilterProps> = ({ filter, setFilter }) => {
           <HugeiconsIcon icon={Search01Icon} size={17} />
           <input
             type="text"
-            placeholder="Search here"
+            placeholder={t("filter.searchPlaceholder")}
             className="placeholder-text/70 h-full"
           />
           <div className="bg-background flex items-center gap-1 rounded-lg p-0 px-1">
@@ -85,11 +92,11 @@ const Filter: React.FC<FilterProps> = ({ filter, setFilter }) => {
         </div>
         <div className="border-text/30 flex items-center gap-1 rounded-lg border p-1.5">
           <HugeiconsIcon icon={FilterMailIcon} size={17} />
-          <span>Filter</span>
+          <span>{t("filter.filter")}</span>
         </div>
         <div className="border-text/30 flex items-center gap-1 rounded-lg border p-1.5">
           <HugeiconsIcon icon={SortByDown02Icon} size={17} />
-          <span>Sort</span>
+          <span>{t("filter.sort")}</span>
         </div>
         <Separator
           orientation="vertical"
@@ -105,6 +112,7 @@ const Filter: React.FC<FilterProps> = ({ filter, setFilter }) => {
             />
           ))}
         </div>
+        <AddTodos />
       </div>
     </div>
   );

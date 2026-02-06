@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Fire02FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslation } from "react-i18next";
 
 export function NavMain({
   items,
@@ -17,8 +18,11 @@ export function NavMain({
     title: string;
     url: string;
     icon?: any;
+    id?: string;
   }[];
 }) {
+  const { t } = useTranslation();
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -26,9 +30,12 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              {item.title.toLocaleLowerCase() === "inbox" ? (
-                <SidebarMenuButton tooltip={item.title} className="flex">
-                  <div className="flex items-center gap-2">
+              {item.id === "inbox" ? (
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  className="flex w-full items-center gap-1"
+                >
+                  <div className="flex w-full items-center gap-2">
                     {item.icon && (
                       <HugeiconsIcon
                         icon={item.icon}
@@ -36,11 +43,13 @@ export function NavMain({
                         className="text-text/70"
                       />
                     )}
-                    <span>{item.title}</span>
+                    <span className="line-clamp-1 text-start">
+                      {item.title}
+                    </span>
                   </div>
-                  <div className="bg-special/10 text-special ml-auto flex items-center gap-1 rounded-full p-0.5 px-2 font-semibold">
+                  <div className="bg-special/10 text-special ml-auto flex w-fit items-center gap-1 rounded-full p-0.5 px-2 font-semibold">
                     <HugeiconsIcon icon={Fire02FreeIcons} size={17} />
-                    <span>New</span>
+                    <span>{t("nav.new")}</span>
                   </div>
                 </SidebarMenuButton>
               ) : (
@@ -52,7 +61,7 @@ export function NavMain({
                       className="text-text/70"
                     />
                   )}
-                  <span>{item.title}</span>
+                  <span className="line-clamp-1">{item.title}</span>
                 </SidebarMenuButton>
               )}
             </SidebarMenuItem>

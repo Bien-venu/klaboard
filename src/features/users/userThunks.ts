@@ -1,13 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserService } from "./userService";
+import { getUserService, getUsersService } from "./userService";
 
 export const fetchUser = createAsyncThunk(
   "users/fetchUser",
   async (id: number, thunkAPI) => {
     try {
-      const data = await getUserService(id);
-      return data; 
+      return await getUserService(id);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+
+export const fetchUsers = createAsyncThunk(
+  "users/fetchUsers",
+  async (_, thunkAPI) => {
+    try {
+      return await getUsersService(); // always skip=0, limit=30
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }

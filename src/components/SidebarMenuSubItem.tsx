@@ -26,7 +26,7 @@ export function DraggableSubItem({ subItem }: { subItem: any }) {
     >
       <SidebarMenuSubButton asChild>
         <div
-          className={`flex items-center gap-2 cursor-pointer rounded-xl px-0 py-2 ${isActive ? "border-text/20 text-text bg-foreground border" : ""}`}
+          className={`flex cursor-pointer items-center gap-2 rounded-lg px-0 py-2 ${isActive ? "border-text/20 text-text bg-foreground border" : ""}`}
         >
           <GripVertical size={20} className="text-text/30" />
           <div className="flex items-center gap-2">

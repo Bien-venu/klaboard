@@ -10,6 +10,7 @@
 body {
   overflow: hidden;
   height: 100vh;
+  ring: 0;
 }
 
 :root {
@@ -128,12 +129,22 @@ body {
 }
 
 .fc .fc-button {
-  @apply bg-foreground text-text border-text/10 hover:bg-background flex rounded-md border px-4 py-2 transition;
+  @apply bg-background capitalize ring-0! text-text hover:text-text hover:border-text/30 border-text/10 hover:bg-foreground flex rounded-md border px-3 py-1 transition;
 }
 
 .fc .fc-button.fc-button-active {
-  @apply bg-background text-text flex;
+  @apply bg-foreground!  ring-0! text-text! border-text/30! flex;
 }
+
+/* Style specifically the Today button */
+.fc .fc-button.fc-today-button {
+  @apply bg-foreground text-text font-medium border-text/30 flex;
+}
+
+.fc .fc-button.fc-today-button:hover {
+  @apply bg-foreground text-text;
+}
+
 
 .fc .fc-button-group {
   @apply flex gap-1;

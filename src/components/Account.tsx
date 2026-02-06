@@ -63,36 +63,38 @@ export function Accounts({ items }: { items: any[] }) {
               />
             </SidebarMenuButton>
 
-            <SidebarMenuSub className="rounded-xl px-0">
+            <SidebarMenuSub className="rounded-lg px-0">
               <SortableContext
                 items={subItems.map((i: { title: any }) => i.title)}
                 strategy={verticalListSortingStrategy}
               >
-                {subItems.map((subItem: { icon: any; title: string }, index: number) => (
-                  <SidebarMenuSubItem className="p-0" key={index}>
-                    <SidebarMenuSubButton asChild className="p-0">
-                      <div
-                        className={`flex items-center gap-2 rounded-xl p-0 px-0 py-2`}
-                      >
-                        <div className="flex items-center gap-2">
-                          {subItem.icon && (
-                            <img
-                              src={subItem.icon}
-                              alt={subItem.title}
-                              className="size-6.5 rounded-md object-cover object-top"
-                            />
-                          )}
-                          <span>{subItem.title}</span>
+                {subItems.map(
+                  (subItem: { icon: any; title: string }, index: number) => (
+                    <SidebarMenuSubItem className="p-0" key={index}>
+                      <SidebarMenuSubButton asChild className="p-0">
+                        <div
+                          className={`flex items-center gap-2 rounded-lg p-0 px-0 py-2`}
+                        >
+                          <div className="flex items-center gap-2">
+                            {subItem.icon && (
+                              <img
+                                src={subItem.icon}
+                                alt={subItem.title}
+                                className="size-6.5 rounded-md object-cover object-top"
+                              />
+                            )}
+                            <span>{subItem.title}</span>
+                          </div>
+                          <HugeiconsIcon
+                            icon={MoreHorizontalIcon}
+                            className="text-text/70 ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
+                            size={20}
+                          />
                         </div>
-                        <HugeiconsIcon
-                          icon={MoreHorizontalIcon}
-                          className="text-text/70 ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
-                          size={20}
-                        />
-                      </div>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                ))}
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  ),
+                )}
               </SortableContext>
             </SidebarMenuSub>
           </SidebarMenuItem>

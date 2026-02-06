@@ -1,16 +1,18 @@
-"use client";
-
 import type { TodoItem } from "@/types/todo";
+import { useTranslation } from "react-i18next";
+
 import {
   DndContext,
   DragOverlay,
+  KeyboardSensor,
+  PointerSensor,
   pointerWithin,
   useDroppable,
-  type DragEndEvent
+  useSensor,
+  useSensors,
+  type DragEndEvent,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import type { ColumnDef } from "@tanstack/react-table";
-import { GripVertical } from "lucide-react";
 import React, { useState } from "react";
 
 import {
@@ -21,7 +23,6 @@ import {
 import {
   Add01Icon,
   ArrowDown01Icon,
-  AttachmentIcon,
   ChatEdit01Icon,
   Fire02Icon,
   FireIcon,
@@ -29,29 +30,8 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import Bienvenu from "@/assets/images/Bienvenu.jpg";
-import Older from "@/assets/images/Older.png";
-import Doctor from "@/assets/images/doctor.png";
 import DraggedRowPreview from "./DraggedRowPreview";
 import { Tables } from "./Table";
-
-const users: {
-  title: string;
-  icon: string;
-}[] = [
-  {
-    title: "Bienvenu",
-    icon: Older,
-  },
-  {
-    title: "Jean",
-    icon: Bienvenu,
-  },
-  {
-    title: "Emme",
-    icon: Doctor,
-  },
-];
 
 const columns = ["To-do", "On Progress", "Need Review", "Done"] as const;
 type ColumnType = (typeof columns)[number];
@@ -101,8 +81,18 @@ const KanbanTables: React.FC<KanbanProps> = ({ todoList, loading }) => {
   };
   const [activeRow, setActiveRow] = useState<TodoItem | null>(null);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 0.5,
+      },
+    }),
+    useSensor(KeyboardSensor),
+  );
+
   return (
     <DndContext
+      sensors={sensors}
       collisionDetection={pointerWithin}
       onDragStart={({ active }) => {
         const column = active.data.current?.column as ColumnType;
@@ -114,19 +104,17 @@ const KanbanTables: React.FC<KanbanProps> = ({ todoList, loading }) => {
         handleDragEnd(event);
       }}
     >
-      <div className="bg-background overflow-auto flex h-full w-full flex-col gap-4 rounded-xl p-4">
+      <div className="bg-background flex h-full w-full flex-col gap-4 overflow-auto rounded-lg p-4">
         {columns.map((col) => (
           <ColumnSection
             key={col}
             id={col}
             tasks={tasks[col]}
-            tableColumns={tableColumns}
             loading={loading}
           />
         ))}
       </div>
 
-      {/* ✅ ADD THIS RIGHT HERE */}
       <DragOverlay>
         {activeRow ? <DraggedRowPreview row={activeRow} /> : null}
       </DragOverlay>
@@ -136,86 +124,28 @@ const KanbanTables: React.FC<KanbanProps> = ({ todoList, loading }) => {
 
 export default KanbanTables;
 
-// ✅ Table column definitions
-const tableColumns: ColumnDef<TodoItem>[] = [
-  {
-    id: "chevron",
-    header: "",
-    cell: () => <GripVertical size={20} className="text-text/50" />,
-  },
-  {
-    id: "todo",
-    header: "Name",
-    accessorKey: "todo",
-    cell: ({ row }) => {
-      const todo = row.original.todo;
-      return <span>{todo}</span>;
-    },
-  },
-  {
-    id: "date",
-    header: "Date",
-    accessorKey: "date",
-    cell: () => {
-      return <span>May 18, 2024 - May 26, 2024 </span>;
-    },
-  },
-  {
-    id: "completed",
-    header: "Status",
-    cell: ({ row }) => (
-      <span
-        className={
-          row.original.completed
-            ? "text-done bg-done/10 rounded-full p-2 px-4"
-            : "text-error bg-error/10 rounded-full p-2 px-4"
-        }
-      >
-        {row.original.completed ? "Low" : "High"}
-      </span>
-    ),
-  },
-  {
-    id: "attachment",
-    header: "Attachment",
-    accessorKey: "attachment",
-    cell: () => {
-      return (
-        <div className="border-text/10 bg-text/10 flex w-fit items-center gap-2 rounded-full border p-2 px-4">
-          <HugeiconsIcon icon={AttachmentIcon} size={20} />{" "}
-          <span>requirements.doc</span>
-        </div>
-      );
-    },
-  },
-  {
-    id: "people",
-    header: "People",
-    accessorKey: "people",
-    cell: () => {
-      return (
-        <div className="flex min-w-20 -space-x-3">
-          {users.map((user, index) => (
-            <img
-              key={index}
-              src={user.icon}
-              alt={user.title}
-              className="ring-foreground size-8 rounded-md object-cover object-top ring-1"
-            />
-          ))}
-        </div>
-      );
-    },
-  },
-];
-
 const ColumnSection: React.FC<{
   id: ColumnType;
   tasks: TodoItem[];
-  tableColumns: ColumnDef<TodoItem>[];
   loading: boolean;
 }> = ({ id, tasks, loading }) => {
+  const { t } = useTranslation();
   const { setNodeRef } = useDroppable({ id, data: { column: id } });
+
+  const getColumnLabel = (id: ColumnType) => {
+    switch (id) {
+      case "To-do":
+        return t("kanban.todo");
+      case "On Progress":
+        return t("kanban.onProgress");
+      case "Need Review":
+        return t("kanban.needReview");
+      case "Done":
+        return t("kanban.done");
+      default:
+        return id;
+    }
+  };
 
   return (
     <div ref={setNodeRef} className="min-h-[150px">
@@ -228,7 +158,7 @@ const ColumnSection: React.FC<{
                 className="text-text/70 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
                 size={20}
               />
-              <h2 className="font-semibold">{id}</h2>
+              <h2 className="font-semibold">{getColumnLabel(id)}</h2>
               {id === "To-do" && (
                 <div className="bg-error/10 text-error flex items-center gap-1 rounded-full p-0.5 px-2">
                   <HugeiconsIcon icon={ChatEdit01Icon} size={17} />

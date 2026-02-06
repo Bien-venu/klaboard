@@ -6,12 +6,12 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full -hidden -x-auto rounded-xl"
+      className="-hidden -x-auto relative w-full rounded-lg"
     >
       <table
         data-slot="table"
         className={cn(
-          "bg-foreground w-full caption-bottom -hidden rounded-xl text-sm",
+          "bg-foreground -hidden w-full caption-bottom rounded-lg text-sm",
           className,
         )}
         {...props}
@@ -24,7 +24,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
-      className={cn("rounded-xl [&_tr]:border-0", className)}
+      className={cn("rounded-lg [&_tr]:border-0", className)}
       {...props}
     />
   );
@@ -84,7 +84,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
     <td
       data-slot="table-cell"
       className={cn(
-        "border-text/10 max-w-96 min-w-fit truncate -hidden border-t p-2 py-4 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-[2px]",
+        "border-text/10 -hidden max-w-96 min-w-fit truncate border-t p-2 py-4 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 *:[[role=checkbox]]:translate-y-[2px]",
         className,
       )}
       {...props}

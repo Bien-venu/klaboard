@@ -1,27 +1,17 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { fetchUser } from "./userThunks";
-
-export type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  age: number;
-  gender: string;
-  email: string;
-  phone: string;
-  username: string;
-  image: string;
-  role: string;
-};
+import { fetchUser, fetchUsers } from "./userThunks";
+import type { User } from "@/types/todo";
 
 type UserState = {
   users: Record<number, User>;
+  list: User[];
   loading: boolean;
   error: string | null;
 };
 
 const initialState: UserState = {
   users: {},
+  list: [],
   loading: false,
   error: null,
 };
@@ -32,6 +22,7 @@ const userSlice = createSlice({
   reducers: {
     clearUser: (state) => {
       state.users = {};
+      state.list = [];
       state.error = null;
       state.loading = false;
     },
@@ -47,6 +38,21 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.list = action.payload.users;
+        action.payload.users.forEach((u: User) => {
+          state.users[u.id] = u;
+        });
+        state.loading = false;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

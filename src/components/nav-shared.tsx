@@ -74,7 +74,7 @@ export function NavShared({ items }: { items: any[] }) {
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <SidebarMenuSub className="rounded-xl px-0">
+                <SidebarMenuSub className="rounded-lg px-0">
                   <SortableContext
                     items={subItems.map((i: { title: any }) => i.title)}
                     strategy={verticalListSortingStrategy}

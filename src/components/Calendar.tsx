@@ -1,9 +1,13 @@
-"use client";
 import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import Bienvenu from "@/assets/images/Bienvenu.jpg";
+import Older from "@/assets/images/Older.png";
+import Doctor from "@/assets/images/doctor.png";
+import EditTodo from "./EditTodo";
+import DeleteTodo from "./Delete";
 
 type TodoItem = {
   id: number;
@@ -11,6 +15,24 @@ type TodoItem = {
   priority?: "High" | "Medium" | "Low";
   description?: string;
 };
+
+const users: {
+  title: string;
+  icon: string;
+}[] = [
+  {
+    title: "Bienvenu",
+    icon: Older,
+  },
+  {
+    title: "Jean",
+    icon: Bienvenu,
+  },
+  {
+    title: "Emme",
+    icon: Doctor,
+  },
+];
 
 // Theme colors for priority
 const priorityColors: Record<string, string> = {
@@ -52,8 +74,29 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
 
   const [events] = useState(eventsWithDates);
 
+  const randomOrder = (arr: typeof users) =>
+    [...arr].sort(() => Math.random() - 0.5);
+  const fromFront = (arr: typeof users) => arr;
+  const fromBack = (arr: typeof users) => [...arr].reverse();
+  const fromCenter = (arr: typeof users) => {
+    if (arr.length === 3) {
+      return [arr[1], arr[0], arr[2]];
+    }
+    return arr;
+  };
+  const mode: "random" | "front" | "back" | "center" = "random";
+
+  const orderedUsers =
+    mode === "random"
+      ? randomOrder(users)
+      : mode === "front"
+        ? fromFront(users)
+        : mode === "back"
+          ? fromBack(users)
+          : fromCenter(users);
+
   return (
-    <div className="bg-background text-text h-full w-full min-w-[1400px] overflow-hidden rounded-xl px-4">
+    <div className="bg-background text-text h-full w-full min-w-[1400px] overflow-hidden rounded-lg px-4">
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
@@ -69,7 +112,7 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
 
           return (
             <div
-              className={`bg-foreground flex h-fit w-full flex-col gap-1 rounded-xl border p-2 shadow-sm`}
+              className={`bg-foreground border-text/10 flex h-fit w-full flex-col gap-1 rounded-lg border p-2 shadow-sm`}
             >
               <div className="flex items-center justify-between gap-4">
                 <div className="text-text/60 flex items-center gap-1 text-xs font-semibold">
@@ -83,7 +126,7 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
                   </span>
                 </div>
                 <div
-                  className={`bg-opacity- flex rounded-xl px-2 py-1 text-xs font-semibold ${
+                  className={`bg-opacity- flex rounded-lg px-2 py-1 text-xs font-semibold text-white ${
                     priority && priorityColors[priority]
                   }`}
                 >
@@ -97,6 +140,39 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
               <p className="text-text truncate text-xs font-normal">
                 {arg.event.title}
               </p>
+              <div className="border-text/10 flex items-center justify-between border-t pt-3">
+                <div className="flex items-center gap-1">
+                  <EditTodo
+                    todo={{
+                      id: Number(arg.event.id),
+                      todo: arg.event.title,
+                      completed: arg.event.extendedProps?.completed ?? false,
+                      userId: arg.event.extendedProps?.userId ?? 0,
+                    }}
+                  />
+
+                  <DeleteTodo
+                    todo={{
+                      id: Number(arg.event.id),
+                      todo: arg.event.title,
+                      completed: arg.event.extendedProps?.completed ?? false,
+                      userId: arg.event.extendedProps?.userId ?? 0,
+                    }}
+                  />
+                </div>
+                <div className="border-text/10 flex items-center justify-between overflow-hidden rounded-lg">
+                  <div className="flex -space-x-3">
+                    {orderedUsers.map((user, index) => (
+                      <img
+                        key={index}
+                        src={user.icon}
+                        alt={user.title}
+                        className="ring-foreground size-7 rounded-md object-cover object-top ring-1"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           );
         }}

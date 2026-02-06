@@ -11,6 +11,7 @@ import {
   ArrowRight01Icon,
 } from "@hugeicons/core-free-icons";
 import { Separator } from "./ui/separator";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export function SiteHeader() {
   const { isMobile, open } = useSidebar();
@@ -25,7 +26,7 @@ export function SiteHeader() {
             <>{!open && <SidebarTrigger className="-ml-1" />}</>
           )}
 
-          <div className="hidden items-center gap-2 sm:flex md:hidden lg:flex">
+          <div className="gap- hidden items-center sm:flex md:hidden lg:flex">
             <HugeiconsIcon icon={Add01Icon} size={20} />
             <Separator
               orientation="vertical"
@@ -41,13 +42,13 @@ export function SiteHeader() {
         </div>
 
         <div className="text-text flex items-center gap-2">
-          <div className="border-text/30 flex gap-1 rounded-lg border p-1.5">
+          <div className="border-text/10 flex gap-1 rounded-lg border p-1.5 shadow-xs">
             <ThemeToggle />
           </div>
-          <div className="border-text/30 flex gap-1 rounded-lg border p-1.5">
+          <div className="border-text/10 hidden gap-1 rounded-lg border p-1.5 shadow-xs md:flex">
             <HugeiconsIcon icon={StarIcon} size={17} />
           </div>
-          <div className="border-text/30 flex gap-1 rounded-lg border p-1.5">
+          <div className="border-text/10 hidden gap-1 rounded-lg border p-1.5 shadow-xs md:flex">
             <HugeiconsIcon icon={Message02Icon} size={17} />
           </div>
           <Separator
@@ -55,13 +56,14 @@ export function SiteHeader() {
             className="mx-2 data-[orientation=vertical]:h-4"
           />
 
-          <div className="border-text/30 flex gap-1 rounded-lg border p-1.5">
+          <div className="border-text/10 hidden gap-1 rounded-lg border p-1.5 shadow-xs md:flex">
             <HugeiconsIcon icon={Clock02Icon} size={17} />
           </div>
-          <div className="border-text/30 flex items-center gap-1 rounded-lg border p-1.5">
+          <div className="border-text/10 hidden items-center gap-1 rounded-lg border p-1.5 shadow-xs md:flex">
             <HugeiconsIcon icon={FilterIcon} size={17} />
             <span>Share</span>
           </div>
+          <LanguageSwitcher />
         </div>
       </div>
     </header>

@@ -12,3 +12,16 @@ export type TodoItem = {
   completed: boolean;
   userId: number;
 };
+
+export type User = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  age: number;
+  gender: string;
+  email: string;
+  phone: string;
+  username: string;
+  image: string;
+  role: string;
+};

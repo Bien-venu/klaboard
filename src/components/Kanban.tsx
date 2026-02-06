@@ -11,6 +11,7 @@ import {
   arrayMove,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
+import { useTranslation } from "react-i18next";
 import {
   Add01Icon,
   ChatEdit01Icon,
@@ -128,7 +129,7 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
   };
 
   return (
-    <div className="bg-background h-full w-full overflow-auto rounded-xl px-4">
+    <div className="bg-background h-full w-full overflow-auto rounded-lg px-4">
       <DndContext
         collisionDetection={pointerWithin}
         onDragStart={(event) => {
@@ -166,10 +167,26 @@ const Column: React.FC<{
   id: ColumnType;
   tasks: TodoItem[];
 }> = ({ id, tasks }) => {
+  const { t } = useTranslation();
   const { setNodeRef } = useDroppable({
     id,
     data: { column: id },
   });
+
+  const getColumnLabel = (id: ColumnType) => {
+    switch (id) {
+      case "To-do":
+        return t("kanban.todo");
+      case "On Progress":
+        return t("kanban.onProgress");
+      case "Need Review":
+        return t("kanban.needReview");
+      case "Done":
+        return t("kanban.done");
+      default:
+        return id;
+    }
+  };
 
   return (
     <div
@@ -177,14 +194,14 @@ const Column: React.FC<{
       className="bg-background flex h-full w-full flex-col gap-4 rounded-lg"
     >
       <div className="bg-background sticky top-0 border-0 pt-4">
-        <div className="border-text/10 bg-foreground flex items-center justify-between gap-2 rounded-xl border p-2">
+        <div className="border-text/10 bg-foreground flex items-center justify-between gap-2 rounded-lg border p-2">
           <div className="flex items-center gap-2">
             <HugeiconsIcon
               icon={Add01Icon}
               className="text-text/70 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
               size={20}
             />
-            <h2 className="font-semibold">{id}</h2>
+            <h2 className="font-semibold">{getColumnLabel(id)}</h2>
           </div>
 
           {id === "To-do" && (

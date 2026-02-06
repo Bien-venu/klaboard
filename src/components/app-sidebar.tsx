@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 import Bienvenu from "@/assets/images/Bienvenu.jpg";
 import Logo1 from "@/assets/images/logo/Logo1.png";
@@ -27,90 +28,97 @@ import Logo from "./Logo";
 import { NavPrivate } from "./nav-private";
 import Productivity from "./Productivity";
 
-const data = {
-  user: {
-    name: "Bienvenu",
-    email: "m@example.com",
-    avatar: Bienvenu,
-  },
-  navMain: [
-    {
-      title: "Search",
-      url: "#",
-      icon: Search01Icon,
-    },
-    {
-      title: "Kla AI",
-      url: "#",
-      icon: SparklesIcon,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Mail01Icon,
-    },
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar02Icon,
-    },
-    {
-      title: "Settings & Preferences",
-      url: "#",
-      icon: Setting07Icon,
-    },
-  ],
-  shared: [
-    {
-      title: "Shared Pages",
-      isActive: true,
-      items: [
-        {
-          title: "HR Tasks Hub",
-          url: "/",
-          icon: Logo1,
-        },
-        {
-          title: "Windah Comp",
-          url: "#",
-          icon: Logo2,
-        },
-        {
-          title: "NoSpace Dev",
-          url: "#",
-          icon: Logo3,
-        },
-      ],
-    },
-  ],
-  private: [
-    {
-      title: "Private Pages",
-      isActive: true,
-      items: [
-        {
-          title: "Dribbble Portfolio",
-          url: "#",
-          icon: Logo4,
-        },
-      ],
-    },
-  ],
-  account: [
-    {
-      title: "Accounts",
-      isActive: true,
-      items: [
-        {
-          title: "Bienvenu",
-          icon: Bienvenu,
-        },
-      ],
-    },
-  ],
-};
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { t } = useTranslation();
+
+  const data = {
+    user: {
+      name: t("user.name"),
+      email: "m@example.com",
+      avatar: Bienvenu,
+    },
+    navMain: [
+      {
+        title: t("nav.search"),
+        url: "#",
+        icon: Search01Icon,
+        id: "search",
+      },
+      {
+        title: t("nav.klaAi"),
+        url: "#",
+        icon: SparklesIcon,
+        id: "klaAi",
+      },
+      {
+        title: t("nav.inbox"),
+        url: "#",
+        icon: Mail01Icon,
+        id: "inbox",
+      },
+      {
+        title: t("nav.calendar"),
+        url: "#",
+        icon: Calendar02Icon,
+        id: "calendar",
+      },
+      {
+        title: t("nav.settings"),
+        url: "#",
+        icon: Setting07Icon,
+        id: "settings",
+      },
+    ],
+    shared: [
+      {
+        title: t("nav.sharedPages"),
+        isActive: true,
+        items: [
+          {
+            title: t("nav.hrTasksHub"),
+            url: "/",
+            icon: Logo1,
+          },
+          {
+            title: t("nav.windahComp"),
+            url: "#",
+            icon: Logo2,
+          },
+          {
+            title: t("nav.noSpaceDev"),
+            url: "#",
+            icon: Logo3,
+          },
+        ],
+      },
+    ],
+    private: [
+      {
+        title: t("nav.privatePages"),
+        isActive: true,
+        items: [
+          {
+            title: t("nav.dribbblePortfolio"),
+            url: "#",
+            icon: Logo4,
+          },
+        ],
+      },
+    ],
+    account: [
+      {
+        title: t("nav.accounts"),
+        isActive: true,
+        items: [
+          {
+            title: t("user.name"),
+            icon: Bienvenu,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

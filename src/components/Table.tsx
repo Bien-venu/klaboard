@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/incompatible-library */
 /* eslint-disable react-refresh/only-export-components */
 import Bienvenu from "@/assets/images/Bienvenu.jpg";
@@ -70,7 +71,12 @@ const users: {
   },
 ];
 
-export const getColumns = (): ColumnDef<TodoItem>[] => [
+import { useTranslation } from "react-i18next";
+import EditTodo from "./EditTodo";
+import DeleteTodo from "./Delete";
+// ... imports ...
+
+export const getColumns = (t: any): ColumnDef<TodoItem>[] => [
   {
     id: "select",
     header: () => <></>,
@@ -85,7 +91,7 @@ export const getColumns = (): ColumnDef<TodoItem>[] => [
   },
   {
     id: "todo",
-    header: "Name",
+    header: t("table.headers.name"),
     accessorKey: "todo",
     cell: ({ row }) => {
       const todo = row.original.todo;
@@ -94,15 +100,15 @@ export const getColumns = (): ColumnDef<TodoItem>[] => [
   },
   {
     id: "date",
-    header: "Date",
+    header: t("table.headers.date"),
     accessorKey: "date",
     cell: () => {
-      return <span>May 18, 2024 - May 26, 2024 </span>;
+      return <span>{t("table.rows.mockDateRange")}</span>;
     },
   },
   {
     id: "completed",
-    header: "Status",
+    header: t("table.headers.status"),
     cell: ({ row }) => (
       <span
         className={
@@ -111,26 +117,28 @@ export const getColumns = (): ColumnDef<TodoItem>[] => [
             : "text-error bg-error/10 rounded-full p-2 px-4"
         }
       >
-        {row.original.completed ? "Low" : "High"}
+        {row.original.completed
+          ? t("table.status.low")
+          : t("table.status.high")}
       </span>
     ),
   },
   {
     id: "attachment",
-    header: "Attachment",
+    header: t("table.headers.attachment"),
     accessorKey: "attachment",
     cell: () => {
       return (
         <div className="border-text/10 bg-text/10 flex w-fit items-center gap-2 rounded-full border p-2 px-4">
           <HugeiconsIcon icon={AttachmentIcon} size={20} />{" "}
-          <span>requirements.doc</span>
+          <span>{t("table.rows.mockAttachment")}</span>
         </div>
       );
     },
   },
   {
     id: "people",
-    header: "People",
+    header: t("table.headers.people"),
     accessorKey: "people",
     cell: () => {
       return (
@@ -143,6 +151,23 @@ export const getColumns = (): ColumnDef<TodoItem>[] => [
               className="ring-foreground size-8 rounded-md object-cover object-top ring-1"
             />
           ))}
+        </div>
+      );
+    },
+  },
+  {
+    id: "action",
+    header: "Action",
+    accessorKey: "action",
+    cell: ({ row }: any) => {
+      const task = row.original;
+      return (
+        <div
+          className="flex items-center gap-1"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <EditTodo todo={task} />
+          <DeleteTodo todo={task} />
         </div>
       );
     },
@@ -162,7 +187,9 @@ export function Tables({
   loading: boolean;
   id: string;
 }) {
+  const { t } = useTranslation();
   const [data, setData] = React.useState(initialData);
+
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -182,7 +209,7 @@ export function Tables({
     [data],
   );
 
-  const columns = React.useMemo(() => getColumns(), []);
+  const columns = React.useMemo(() => getColumns(t), [t]);
 
   const filteredData = React.useMemo(() => {
     return data.filter((item) => {
@@ -230,7 +257,7 @@ export function Tables({
   return (
     <div className="relative flex h-full flex-col gap-4 overflow-hidden">
       <div className="flex w-full flex-col flex-wrap gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="bg-foreground relative flex w-full items-center gap-2 rounded-xl border border-none p-2 px-3 outline-none sm:w-1/5 sm:min-w-80">
+        <div className="bg-foreground relative flex w-full items-center gap-2 rounded-lg border border-none p-2 px-3 outline-none sm:w-1/5 sm:min-w-80">
           <HugeiconsIcon
             icon={Search01Icon}
             size={20}
@@ -246,7 +273,7 @@ export function Tables({
         <div className="flex flex-wrap items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="border-text/10 flex h-full items-center justify-between gap-4 rounded-xl border px-3 py-2 text-sm shadow-xs outline-none">
+              <button className="border-text/10 flex h-full items-center justify-between gap-4 rounded-lg border px-3 py-2 text-sm shadow-xs outline-none">
                 Columns <ChevronDown size={20} className="text-text/60" />
               </button>
             </DropdownMenuTrigger>
@@ -274,7 +301,7 @@ export function Tables({
       </div>
 
       {/* ✅ Table */}
-      <div className="border-text/10 h-full overflow-y-auto rounded-xl border">
+      <div className="border-text/10 h-full overflow-y-auto rounded-lg border">
         <Table>
           <TableHeader className="sticky top-0 z-10 backdrop-blur">
             {table.getHeaderGroups().map((headerGroup) => (

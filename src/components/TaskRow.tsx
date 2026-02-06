@@ -1,5 +1,3 @@
-"use client";
-
 import type { TodoItem } from "@/types/todo";
 import type { Row } from "@tanstack/react-table";
 import { useSortable } from "@dnd-kit/sortable";
@@ -12,11 +10,17 @@ const TaskRow: React.FC<{ row: Row<TodoItem>; column: string }> = ({
   row,
   column,
 }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({
-      id: row.original.id,
-      data: { column },
-    });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+  } = useSortable({
+    id: row.original.id,
+    data: { column },
+  });
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -32,7 +36,7 @@ const TaskRow: React.FC<{ row: Row<TodoItem>; column: string }> = ({
       className="border-text/10 cursor-grab border-t"
     >
       {row.getVisibleCells().map((cell) => (
-        <TableCell key={cell.id} className="">
+        <TableCell key={cell.id} ref={setActivatorNodeRef}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>
       ))}

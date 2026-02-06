@@ -1,0 +1,72 @@
+{
+  "title": "Gestionnaire de tâches",
+  "freeTrial": "Essai gratuit",
+  "addTask": "Ajouter une tâche",
+  "editTask": "Modifier la tâche",
+  "deleteTask": "Supprimer la tâche",
+  "user": {
+    "name": "Bienvenu"
+  },
+  "nav": {
+    "search": "Rechercher",
+    "klaAi": "Kla AI",
+    "inbox": "Boîte de réception",
+    "calendar": "Calendrier",
+    "settings": "Paramètres et préférences",
+    "sharedPages": "Pages partagées",
+     "hrTasksHub": "HR Tasks Hub",
+    "windahComp": "Windah Comp",
+    "noSpaceDev": "NoSpace Dev",
+    "privatePages": "Pages privées",
+    "dribbblePortfolio": "Portfolio Dribbble",
+    "accounts": "Comptes",
+    "new": "Nouveau"
+  },
+  "pageHeader": {
+    "title": "Centre des tâches RH",
+    "subtitle": "Bienvenue dans le centre des ressources humaines"
+  },
+  "filter": {
+    "kanban": "Kanban",
+    "list": "Liste",
+    "calendar": "Calendrier",
+    "searchPlaceholder": "Rechercher ici",
+    "filter": "Filtrer",
+    "sort": "Trier"
+  },
+  "kanban": {
+    "todo": "À faire",
+    "onProgress": "En cours",
+    "needReview": "À revoir",
+    "done": "Terminé",
+    "card": {
+      "mockDate": "28 mai 2024"
+    }
+  },
+  "table": {
+    "headers": {
+      "name": "Nom",
+      "date": "Date",
+      "status": "Statut",
+      "attachment": "Pièce jointe",
+      "people": "Personnes"
+    },
+    "rows": {
+      "mockDateRange": "18 mai 2024 - 26 mai 2024",
+      "mockAttachment": "requirements.doc"
+    },
+    "status": {
+      "low": "Faible",
+      "high": "Élevé"
+    }
+  },
+  "productivity": {
+    "title": "Maximisez votre productivité",
+    "description": "Améliorez votre gestion des tâches avec des outils et fonctionnalités avancés.",
+    "upgrade": "Mettre à niveau"
+  },
+  "language": {
+    "english": "Anglais",
+    "french": "Français"
+  }
+}

@@ -37,6 +37,10 @@ export default function HumanResources() {
     });
   }, [todoList, dispatch]);
 
+  const sortedTodos = [...todoList].sort((a, b) => {
+    return b.id - a.id;
+  });
+
   return (
     <div className="flex h-full flex-col overflow-hidden">
       <SiteHeader />
@@ -45,7 +49,7 @@ export default function HumanResources() {
         <Filter filter={filter} setFilter={setFilter} />
         <div className="h-full w-full overflow-hidden px-4 lg:px-6">
           {todoLoading || userLoading ? (
-            <div className="bg-background border-text/10 flex h-full w-full items-center justify-center rounded-xl border p-4">
+            <div className="bg-background border-text/10 flex h-full w-full items-center justify-center rounded-lg border p-4">
               <ClipLoader
                 color={"#9771fe"}
                 size={50}
@@ -56,14 +60,17 @@ export default function HumanResources() {
           ) : (
             <div className="flex h-full w-full overflow-hidden">
               {filter === "kanban" && (
-                <Kanban todoList={todoList as TodoItem[]} />
+                <Kanban todoList={sortedTodos as TodoItem[]} />
               )}
               {filter === "list" && (
-                <List todoList={todoList as TodoItem[]} loading={todoLoading} />
+                <List
+                  todoList={sortedTodos as TodoItem[]}
+                  loading={todoLoading}
+                />
               )}
               {filter === "calendar" && (
-                <div className="flex w-full overflow-auto rounded-xl">
-                  <Calendar todoList={todoList as TodoItem[]} />
+                <div className="flex w-full overflow-auto rounded-lg">
+                  <Calendar todoList={sortedTodos as TodoItem[]} />
                 </div>
               )}
             </div>
