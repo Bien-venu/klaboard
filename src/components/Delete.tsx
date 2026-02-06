@@ -15,6 +15,7 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { Delete02Icon } from "@hugeicons/core-free-icons";
 
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslation } from "react-i18next";
 
 type DeleteTodoProps = {
   todo: {
@@ -27,6 +28,7 @@ type DeleteTodoProps = {
 
 const DeleteTodo = ({ todo }: DeleteTodoProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleDeleteTodo = () => {
     dispatch(deleteTodo(todo.id) as any);
@@ -41,27 +43,26 @@ const DeleteTodo = ({ todo }: DeleteTodoProps) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Task</AlertDialogTitle>
+          <AlertDialogTitle>{t("deleteTodo.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete this task? This action cannot be
-            undone.
+            {t("deleteTodo.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <div className="text-text text-sm">
-          <strong>Task:</strong> {todo.todo}
+          <strong>{t("deleteTodo.taskLabel")}</strong> {todo.todo}
         </div>
 
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">
-            Cancel
+            {t("common.cancel")}
           </AlertDialogCancel>
 
           <button
             onClick={handleDeleteTodo}
             className="rounded-lg bg-red-600 px-4 py-1.5 text-sm text-white hover:bg-red-700"
           >
-            Delete
+            {t("common.delete")}
           </button>
         </AlertDialogFooter>
       </AlertDialogContent>

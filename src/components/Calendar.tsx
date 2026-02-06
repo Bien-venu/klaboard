@@ -8,6 +8,7 @@ import Older from "@/assets/images/Older.png";
 import Doctor from "@/assets/images/doctor.png";
 import EditTodo from "./EditTodo";
 import DeleteTodo from "./Delete";
+import { useTranslation } from "react-i18next";
 
 type TodoItem = {
   id: number;
@@ -42,6 +43,7 @@ const priorityColors: Record<string, string> = {
 };
 
 const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
+  const { t, i18n } = useTranslation();
   const today = new Date();
 
   const priorityOrder: ("High" | "Medium" | "Low")[] = [
@@ -118,7 +120,7 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
                 <div className="text-text/60 flex items-center gap-1 text-xs font-semibold">
                   <span className="border-background bg-text/60 h-3 w-3 rounded-full border-2"></span>
                   <span>
-                    {new Date(arg.event.start!).toLocaleDateString("en-US", {
+                    {new Date(arg.event.start!).toLocaleDateString(i18n.language, {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
@@ -130,7 +132,7 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
                     priority && priorityColors[priority]
                   }`}
                 >
-                  {priority}
+                  {priority ? t(`priority.${priority.toLowerCase()}`) : priority}
                 </div>
               </div>
               <div className="text-text truncate text-sm font-semibold">

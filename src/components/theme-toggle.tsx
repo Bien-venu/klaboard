@@ -15,7 +15,7 @@ export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="relative rounded-full">
+        <div className="border-text/10 flex gap-1 rounded-lg border p-1.5 shadow-xs">
           <HugeiconsIcon
             icon={Sun01Icon}
             className={`transition-all ${

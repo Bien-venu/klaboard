@@ -4,8 +4,49 @@
   "addTask": "Ajouter une tâche",
   "editTask": "Modifier la tâche",
   "deleteTask": "Supprimer la tâche",
+  "common": {
+    "close": "Fermer",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "update": "Mettre à jour",
+    "delete": "Supprimer",
+    "selectOption": "Sélectionner une option...",
+    "searchPlaceholder": "Rechercher...",
+    "noMatch": "Aucun résultat."
+  },
+  "addTodo": {
+    "trigger": "Nouvelles Tâches",
+    "title": "Nouvelles Tâches",
+    "description": "Remplissez les détails ci-dessous pour créer une nouvelle tâche.",
+    "placeholder": {
+      "todo": "Entrer le texte de la tâche",
+      "user": "Sélectionner un utilisateur"
+    },
+    "markAsCompleted": "Marquer comme terminé"
+  },
+  "editTodo": {
+    "title": "Modifier la Tâche",
+    "description": "Mettez à jour les détails ci-dessous et enregistrez les modifications.",
+    "markAsCompleted": "Marquer comme terminé"
+  },
+  "deleteTodo": {
+    "title": "Supprimer la Tâche",
+    "description": "Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.",
+    "taskLabel": "Tâche :"
+  },
   "user": {
-    "name": "Bienvenu"
+    "name": "Bienvenu",
+    "menu": {
+      "account": "Compte",
+      "billing": "Facturation",
+      "notifications": "Notifications",
+      "logout": "Se déconnecter"
+    }
+  },
+  "priority": {
+    "high": "Haute",
+    "medium": "Moyenne",
+    "low": "Basse"
   },
   "nav": {
     "search": "Rechercher",
@@ -14,7 +55,7 @@
     "calendar": "Calendrier",
     "settings": "Paramètres et préférences",
     "sharedPages": "Pages partagées",
-     "hrTasksHub": "HR Tasks Hub",
+    "hrTasksHub": "HR Tasks Hub",
     "windahComp": "Windah Comp",
     "noSpaceDev": "NoSpace Dev",
     "privatePages": "Pages privées",
@@ -25,6 +66,9 @@
   "pageHeader": {
     "title": "Centre des tâches RH",
     "subtitle": "Bienvenue dans le centre des ressources humaines"
+  },
+  "header": {
+    "share": "Partager"
   },
   "filter": {
     "kanban": "Kanban",

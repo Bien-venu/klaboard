@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 type ComboBoxOption = {
   value: string;
@@ -32,9 +33,10 @@ const ComboBox = ({
   options,
   value,
   onChange,
-  placeholder = "Select option...",
+  placeholder,
   className = "w-full",
 }: ComboBoxProps) => {
+  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const selectedLabel = options.find((opt) => opt.value === value)?.label;
 
@@ -49,16 +51,16 @@ const ComboBox = ({
           )}
         >
           <span className="w-full truncate text-left text-sm">
-            {selectedLabel?.toLocaleLowerCase() || placeholder}
+            {selectedLabel?.toLocaleLowerCase() || placeholder || t("common.selectOption")}
           </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </button>
       </PopoverTrigger>
       <PopoverContent className={cn(className, "p-0")}>
         <Command>
-          <CommandInput placeholder="Search..." className="h-9" />
+          <CommandInput placeholder={t("common.searchPlaceholder")} className="h-9" />
           <CommandList>
-            <CommandEmpty>No match found.</CommandEmpty>
+            <CommandEmpty>{t("common.noMatch")}</CommandEmpty>
             <CommandGroup>
               {options.map((opt) => (
                 <CommandItem

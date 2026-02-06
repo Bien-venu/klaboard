@@ -18,9 +18,11 @@ import { useSelector } from "react-redux";
 import ComboBox from "./ComboBox";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { AddIcon } from "@hugeicons/core-free-icons";
+import { useTranslation } from "react-i18next";
 
 const AddTodos = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [selectedUser, setSelectedUser] = useState("");
   const [todoText, setTodoText] = useState("");
@@ -56,14 +58,14 @@ const AddTodos = () => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <div className="hover:bg-special/90 bg-special flex cursor-pointer items-center justify-center gap-1 rounded-lg p-1.5 px-3 text-sm text-white">
-          <HugeiconsIcon icon={AddIcon} size={20} /> <span>New Tasks</span>
+          <HugeiconsIcon icon={AddIcon} size={20} /> <span>{t("addTodo.trigger")}</span>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>New Tasks</AlertDialogTitle>
+          <AlertDialogTitle>{t("addTodo.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Fill in the details below to create a new task.
+            {t("addTodo.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -73,7 +75,7 @@ const AddTodos = () => {
             type="text"
             value={todoText}
             onChange={(e) => setTodoText(e.target.value)}
-            placeholder="Enter todo text"
+            placeholder={t("addTodo.placeholder.todo")}
             className="border-text/10 w-full rounded-md border p-2 px-3 text-sm"
           />
 
@@ -84,7 +86,7 @@ const AddTodos = () => {
               checked={completed}
               onChange={(e) => setCompleted(e.target.checked)}
             />
-            Mark as completed
+            {t("addTodo.markAsCompleted")}
           </label>
 
           {/* User selection */}
@@ -95,14 +97,14 @@ const AddTodos = () => {
             }))}
             value={selectedUser}
             onChange={setSelectedUser}
-            placeholder="Select user"
+            placeholder={t("addTodo.placeholder.user")}
             className="h-full w-full p-3"
           />
         </div>
 
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">
-            Close
+            {t("common.close")}
           </AlertDialogCancel>
 
           <button
@@ -114,7 +116,7 @@ const AddTodos = () => {
                 : "bg-special hover:bg-special/90"
             }`}
           >
-            Save
+            {t("common.save")}
           </button>
         </AlertDialogFooter>
       </AlertDialogContent>

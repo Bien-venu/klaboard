@@ -19,6 +19,7 @@ import { TaskEdit01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 type EditTodoProps = {
   todo: {
@@ -31,6 +32,7 @@ type EditTodoProps = {
 
 const EditTodo = ({ todo }: EditTodoProps) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [todoText, setTodoText] = useState(todo.todo);
   const [completed, setCompleted] = useState(todo.completed);
@@ -70,9 +72,9 @@ const EditTodo = ({ todo }: EditTodoProps) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit Task</AlertDialogTitle>
+          <AlertDialogTitle>{t("editTodo.title")}</AlertDialogTitle>
           <AlertDialogDescription>
-            Update the details below and save changes.
+            {t("editTodo.description")}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -81,7 +83,7 @@ const EditTodo = ({ todo }: EditTodoProps) => {
             type="text"
             value={todoText}
             onChange={(e) => setTodoText(e.target.value)}
-            placeholder="Enter todo text"
+            placeholder={t("addTodo.placeholder.todo")}
             className="border-text/10 w-full rounded-md border p-2 px-3 text-sm"
             readOnly
           />
@@ -92,13 +94,13 @@ const EditTodo = ({ todo }: EditTodoProps) => {
               checked={completed}
               onChange={(e) => setCompleted(e.target.checked)}
             />
-            Mark as completed
+            {t("editTodo.markAsCompleted")}
           </label>
         </div>
 
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">
-            Cancel
+            {t("common.cancel")}
           </AlertDialogCancel>
 
           <button
@@ -110,7 +112,7 @@ const EditTodo = ({ todo }: EditTodoProps) => {
                 : "bg-special hover:bg-special/90"
             }`}
           >
-            Update
+            {t("common.update")}
           </button>
         </AlertDialogFooter>
       </AlertDialogContent>

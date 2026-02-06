@@ -25,7 +25,7 @@ const LanguageSwitcher = () => {
     <div
       role="tablist"
       aria-label={t("language.switcher")}
-      className="border-border bg-muted/30 border-text/10 inline-flex items-center gap-1 rounded-lg border p-1"
+      className="border-border bg-background border-text/10 inline-flex items-center gap-1 rounded-lg border p-1"
     >
       {LANGUAGES.map(({ code, labelKey }) => {
         const active = isActive(code);
@@ -41,8 +41,8 @@ const LanguageSwitcher = () => {
               "rounded-lg px-2 py-1 text-xs font-medium transition-all",
               "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none",
               active
-                ? "bg-background text-text shadow-xs"
-                : "text-muted-foreground hover:bg-muted hover:text-text",
+                ? "bg-foreground text-text shadow-xs"
+                : "text-text hover:bg-foreground hover:text-text",
             ].join(" ")}
           >
             {t(labelKey)}

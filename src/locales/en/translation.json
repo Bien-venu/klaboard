@@ -4,8 +4,49 @@
   "addTask": "Add Task",
   "editTask": "Edit Task",
   "deleteTask": "Delete Task",
+  "common": {
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "update": "Update",
+    "delete": "Delete",
+    "selectOption": "Select option...",
+    "searchPlaceholder": "Search...",
+    "noMatch": "No match found."
+  },
+  "addTodo": {
+    "trigger": "New Tasks",
+    "title": "New Tasks",
+    "description": "Fill in the details below to create a new task.",
+    "placeholder": {
+      "todo": "Enter todo text",
+      "user": "Select user"
+    },
+    "markAsCompleted": "Mark as completed"
+  },
+  "editTodo": {
+    "title": "Edit Task",
+    "description": "Update the details below and save changes.",
+    "markAsCompleted": "Mark as completed"
+  },
+  "deleteTodo": {
+    "title": "Delete Task",
+    "description": "Are you sure you want to delete this task? This action cannot be undone.",
+    "taskLabel": "Task:"
+  },
   "user": {
-    "name": "Bienvenu"
+    "name": "Bienvenu",
+    "menu": {
+      "account": "Account",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "logout": "Log out"
+    }
+  },
+  "priority": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
   },
   "nav": {
     "search": "Search",
@@ -25,6 +66,9 @@
   "pageHeader": {
     "title": "HR Tasks Hub",
     "subtitle": "Welcome to the Human Resources hub"
+  },
+  "header": {
+    "share": "Share"
   },
   "filter": {
     "kanban": "Kanban",

@@ -12,9 +12,11 @@ import {
 } from "@hugeicons/core-free-icons";
 import { Separator } from "./ui/separator";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 export function SiteHeader() {
   const { isMobile, open } = useSidebar();
+  const { t } = useTranslation();
 
   return (
     <header className="border-text/10 flex h-(--header-height) shrink-0 items-center gap-2 border-b">
@@ -34,17 +36,16 @@ export function SiteHeader() {
             />
             <div className="border-text/30 flex items-center gap-1 rounded-lg">
               <HugeiconsIcon icon={GlobalIcon} size={20} />
-              <span>Shared Pages</span>
+              <span>{t("nav.sharedPages")}</span>
             </div>
             <HugeiconsIcon icon={ArrowRight01Icon} size={20} />
-            <span className="text-text">HR Tasks Hub</span>
+            <span className="text-text">{t("nav.hrTasksHub")}</span>
           </div>
         </div>
 
         <div className="text-text flex items-center gap-2">
-          <div className="border-text/10 flex gap-1 rounded-lg border p-1.5 shadow-xs">
             <ThemeToggle />
-          </div>
+          
           <div className="border-text/10 hidden gap-1 rounded-lg border p-1.5 shadow-xs md:flex">
             <HugeiconsIcon icon={StarIcon} size={17} />
           </div>
@@ -61,7 +62,7 @@ export function SiteHeader() {
           </div>
           <div className="border-text/10 hidden items-center gap-1 rounded-lg border p-1.5 shadow-xs md:flex">
             <HugeiconsIcon icon={FilterIcon} size={17} />
-            <span>Share</span>
+            <span>{t("header.share")}</span>
           </div>
           <LanguageSwitcher />
         </div>
