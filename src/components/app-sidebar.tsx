@@ -134,7 +134,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent className="flex h-full flex-col justify-between overflow-hidden">
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full overflow-auto">
           <NavMain items={data.navMain} />
           <NavShared items={data.shared} />
           <NavPrivate items={data.private} />
