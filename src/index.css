@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
-
 @import "tailwindcss";
-
 @import "tw-animate-css";
 
 * {
@@ -60,7 +58,6 @@ body {
   --status-error: #dc2626; /* red for errors/deactivated */
 }
 
-
 /* Theme transition effects */
 .theme-transition {
   @apply transition-all duration-300 ease-in-out;
@@ -70,4 +67,90 @@ body {
 ::-webkit-scrollbar {
   width: 0px;
   height: 0px;
+}
+
+.fc {
+  @apply flex h-full flex-col gap-0 overflow-auto;
+}
+
+/* Apply consistent border color and width everywhere */
+.fc,
+.fc .fc-scrollgrid,
+.fc .fc-scrollgrid-section,
+.fc .fc-scrollgrid-sync-table,
+.fc .fc-daygrid,
+.fc .fc-daygrid-day,
+.fc .fc-daygrid-day-frame,
+.fc .fc-daygrid-day-top,
+.fc .fc-daygrid-day-number,
+.fc .fc-daygrid-divider,
+.fc .fc-daygrid-event,
+.fc .fc-col-header,
+.fc .fc-col-header-cell,
+.fc .fc-timegrid,
+.fc .fc-timegrid-slot,
+.fc .fc-timegrid-slot-label,
+.fc .fc-timegrid-slot-lane,
+.fc .fc-timegrid-axis,
+.fc .fc-timegrid-event,
+.fc .fc-timegrid-divider,
+.fc .fc-event,
+.fc .fc-event-title,
+.fc .fc-event-time,
+.fc .fc-event-main,
+.fc .fc-event-resizer,
+.fc .fc-highlight,
+.fc .fc-bg-event,
+.fc .fc-non-business,
+.fc .fc-popover {
+  @apply border-text/10;
+}
+
+/* Optional: make all borders the same thickness */
+.fc .fc-scrollgrid,
+.fc .fc-scrollgrid-section,
+.fc .fc-daygrid-day,
+.fc .fc-timegrid-slot,
+.fc .fc-col-header-cell {
+  border-width: 1px !important;
+}
+
+.fc .fc-toolbar-chunk:first-child {
+  @apply flex items-center gap-4;
+}
+
+.fc .fc-toolbar {
+  @apply bg-background sticky top-0 z-10 flex items-center justify-between pt-4;
+}
+
+.fc .fc-toolbar-title {
+  @apply text-text flex text-base;
+}
+
+.fc .fc-button {
+  @apply bg-foreground text-text border-text/10 hover:bg-background flex rounded-md border px-4 py-2 transition;
+}
+
+.fc .fc-button.fc-button-active {
+  @apply bg-background text-text flex;
+}
+
+.fc .fc-button-group {
+  @apply flex gap-1;
+}
+
+.fc .fc-col-header-cell {
+  @apply border-text/10 text-text border p-2 text-sm;
+}
+
+.fc .fc-daygrid-day {
+  @apply border-text/10 border;
+}
+
+.fc .fc-timegrid-slot {
+  @apply border-text/10 h-10 border;
+}
+
+.fc .fc-timegrid-divider {
+  @apply hidden;
 }

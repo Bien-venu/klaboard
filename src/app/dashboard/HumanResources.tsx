@@ -18,7 +18,7 @@ export default function HumanResources() {
 
   const todoList = useSelector((state: RootState) => state.todo.todos);
 
-  const [filter, setFilter] = useState("list");
+  const [filter, setFilter] = useState("kanban");
 
   const userLoading = useSelector((state: RootState) => state.user.loading);
   const todoLoading = useSelector((state: RootState) => state.todo.loading);
@@ -61,7 +61,11 @@ export default function HumanResources() {
               {filter === "list" && (
                 <List todoList={todoList as TodoItem[]} loading={todoLoading} />
               )}
-              {filter === "calendar" && <Calendar />}
+              {filter === "calendar" && (
+                <div className="flex w-full overflow-auto rounded-xl">
+                  <Calendar todoList={todoList as TodoItem[]} />
+                </div>
+              )}
             </div>
           )}
         </div>

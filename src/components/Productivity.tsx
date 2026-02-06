@@ -1,15 +1,15 @@
 const Productivity = () => {
   return (
-    <div className="h-fit hidden md:flex px-4 py-1">
+    <div className="hidden h-fit px-4 py-1 md:flex">
       <div className="relative flex flex-col">
         <div className="relative flex h-24 items-end justify-center rounded-t-xl bg-linear-to-r from-blue-500 via-purple-500 to-pink-500">
           <div className="bg-gradient-radial absolute inset-0 from-white/40 via-transparent to-transparent" />
 
-          <div className="absolute bottom-[-1.1rem] h-fit w-fit rounded-xl bg-linear-to-b from-[#9771fe] to-[#6333f3] p-1.5 text-white">
+          <div className="absolute bottom-[-1.1rem] h-fit w-fit overflow-hidden rounded-xl text-white">
             <img
               src="/klaboard.png"
               alt="Klaboard"
-              className="size-6 rounded-md object-cover object-top"
+              className="size-12 rounded-md object-cover object-top"
             />
           </div>
         </div>

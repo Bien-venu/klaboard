@@ -4,11 +4,11 @@ const Logo = () => {
   return (
     <div className="border-text/10 flex items-center justify-between gap-1 border-b pb-4 font-semibold">
       <div className="flex items-center gap-2">
-        <div className="h-fit w-fit rounded-xl bg-linear-to-b from-[#9771fe] to-[#6333f3] p-1.5 text-white">
+        <div className="h-fit w-fit rounded-xl overflow-hidden">
           <img
             src="/klaboard.png"
             alt="Klaboard"
-            className="size-6 rounded-md object-cover object-top"
+            className="size-10 rounded-md object-cover object-top"
           />
         </div>
 
