@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -88,14 +88,15 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
   };
   const mode: "random" | "front" | "back" | "center" = "random";
 
-  const orderedUsers =
-    mode === "random"
+  const orderedUsers = useMemo(() => {
+    return mode === "random"
       ? randomOrder(users)
       : mode === "front"
         ? fromFront(users)
         : mode === "back"
           ? fromBack(users)
           : fromCenter(users);
+  }, []);
 
   return (
     <div className="bg-background text-text h-full w-full min-w-[1400px] overflow-hidden rounded-lg px-4">
@@ -120,11 +121,14 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
                 <div className="text-text/60 flex items-center gap-1 text-xs font-semibold">
                   <span className="border-background bg-text/60 h-3 w-3 rounded-full border-2"></span>
                   <span>
-                    {new Date(arg.event.start!).toLocaleDateString(i18n.language, {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                    {new Date(arg.event.start!).toLocaleDateString(
+                      i18n.language,
+                      {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      },
+                    )}
                   </span>
                 </div>
                 <div
@@ -132,7 +136,9 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
                     priority && priorityColors[priority]
                   }`}
                 >
-                  {priority ? t(`priority.${priority.toLowerCase()}`) : priority}
+                  {priority
+                    ? t(`priority.${priority.toLowerCase()}`)
+                    : priority}
                 </div>
               </div>
               <div className="text-text truncate text-sm font-semibold">

@@ -7,7 +7,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { MoreHorizontalIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import React from "react";
+import React, { useMemo } from "react";
 
 const users: {
   title: string;
@@ -69,14 +69,15 @@ const TaskCard: React.FC<{ task: TodoItem; column: ColumnType }> = ({
   };
   const mode: "random" | "front" | "back" | "center" = "random";
 
-  const orderedUsers =
-    mode === "random"
+  const orderedUsers = useMemo(() => {
+    return mode === "random"
       ? randomOrder(users)
       : mode === "front"
         ? fromFront(users)
         : mode === "back"
           ? fromBack(users)
           : fromCenter(users);
+  }, []);
 
   return (
     <div
