@@ -55,7 +55,6 @@ jest.mock("../../features/users/userThunks", () => {
     fetchUsers: fetchUsersMockFn,
   };
 });
-// Mock API module to avoid import.meta usage during tests
 jest.mock("@/lib/api", () => ({
   __esModule: true,
   default: {
@@ -99,7 +98,6 @@ jest.mock("../../features/ToDo/todoThunks", () => {
     type: "todos/addTodo/fulfilled",
     payload,
   }));
-  // attach type properties expected by extraReducers registration
   addTodoMockFn.pending = { type: "todos/addTodo/pending" };
   addTodoMockFn.fulfilled = { type: "todos/addTodo/fulfilled" };
   addTodoMockFn.rejected = { type: "todos/addTodo/rejected" };

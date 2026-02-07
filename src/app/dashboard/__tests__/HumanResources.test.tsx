@@ -5,8 +5,6 @@ import { MemoryRouter } from "react-router-dom";
 import HumanResources from "../HumanResources";
 import type { ChildrenProps, TFunction } from "../../../../types/testing";
 
-// no redux needed for mocked component
-
 jest.mock("../../../components/theme-provider", () => ({
   __esModule: true,
   ThemeProvider: ({ children }: ChildrenProps) => <div>{children}</div>,

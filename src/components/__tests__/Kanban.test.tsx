@@ -4,8 +4,6 @@ import { render, screen } from "@testing-library/react";
 import type { ChildrenProps, TFunction } from "../../../types/testing";
 import Kanban from "../Kanban";
 
-// no redux needed for mocked component
-
 jest.mock("../theme-provider", () => ({
   __esModule: true,
   ThemeProvider: ({ children }: ChildrenProps) => <div>{children}</div>,

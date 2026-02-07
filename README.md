@@ -75,6 +75,22 @@ Run a specific test file:
 npm test -- src/components/__tests__/AddTodo.test.tsx
 ```
 
+## 🎭 Playwright E2E: Todo CRUD Flow
+
+- Covers creating and deleting todos against a dummy JSON server.
+- Uses `data-testid` selectors for stable element targeting across UI changes.
+- Test file: `tests/todo.e2e.spec.ts`
+
+Prerequisite:
+
+- Start the app locally at http://localhost:3000
+
+Run the E2E test in a headed browser:
+
+```bash
+npx playwright test --headed
+```
+
 ---
 
 ## 🛠️ Build for Production

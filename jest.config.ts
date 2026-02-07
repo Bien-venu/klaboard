@@ -18,6 +18,7 @@ const config: Config = {
     "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/src/__mocks__/fileMock.ts",
     "^@/(.*)$": "<rootDir>/src/$1",
   },
+  testPathIgnorePatterns: ["<rootDir>/tests/"],
   setupFilesAfterEnv: [
     "@testing-library/jest-dom",
     "<rootDir>/src/setupTests.ts",

@@ -23,9 +23,11 @@ export default function HumanResources() {
   const userLoading = useSelector((state: RootState) => state.user.loading);
   const todoLoading = useSelector((state: RootState) => state.todo.loading);
 
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, [dispatch]);
+ useEffect(() => {
+   if (todoList.length === 0) {
+     dispatch(fetchTodos());
+   }
+ }, [dispatch, todoList.length]);
 
   useEffect(() => {
     if (!todoList.length) return;

@@ -15,7 +15,7 @@ export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="border-text/10 flex gap-1 rounded-lg border p-1.5 shadow-xs">
+        <div className="border-text/10 relative flex gap-1 rounded-lg border p-1.5 shadow-xs">
           <HugeiconsIcon
             icon={Sun01Icon}
             className={`transition-all ${
@@ -25,14 +25,14 @@ export function ThemeToggle() {
           />
           <HugeiconsIcon
             icon={Moon02Icon}
-            className={`absolute top-0 right-0 bottom-0 left-0 transition-all ${
+            className={`absolute mx-auto transition-all ${
               theme === "dark" ? "scale-100 opacity-100" : "scale-0 opacity-0"
             }`}
             size={17}
           />
           <HugeiconsIcon
             icon={LaptopIcon}
-            className={`absolute top-0 right-0 bottom-0 left-0 transition-all ${
+            className={`absolute mx-auto transition-all ${
               theme === "system" ? "scale-100 opacity-100" : "scale-0 opacity-0"
             }`}
             size={17}

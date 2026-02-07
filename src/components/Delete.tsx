@@ -15,7 +15,9 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { Delete02Icon } from "@hugeicons/core-free-icons";
 
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ClipLoader } from "react-spinners";
 
 type DeleteTodoProps = {
   todo: {
@@ -30,14 +32,25 @@ const DeleteTodo = ({ todo }: DeleteTodoProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const handleDeleteTodo = () => {
-    dispatch(deleteTodo(todo.id) as any);
-  };
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  const handleDeleteTodo = async () => {
+    setLoading(true);
+    try {
+      await dispatch(deleteTodo(todo.id) as any);
+      setOpen(false);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="text-error bg-error/10 border-error/10 flex items-center gap-1 rounded-lg border p-1 px-2">
+        <div
+          data-testid="delete-todo-trigger"
+          className="text-error bg-error/10 border-error/10 flex items-center gap-1 rounded-lg border p-1 px-2"
+        >
           <HugeiconsIcon icon={Delete02Icon} size={17} />
         </div>
       </AlertDialogTrigger>
@@ -60,8 +73,18 @@ const DeleteTodo = ({ todo }: DeleteTodoProps) => {
 
           <button
             onClick={handleDeleteTodo}
-            className="rounded-lg bg-red-600 px-4 py-1.5 text-sm text-white hover:bg-red-700"
+            disabled={loading}
+            className={`flex items-center gap-2 rounded-lg bg-red-600 px-4 py-1.5 text-sm text-white ${loading ? "cursor-not-allowed opacity-70" : "hover:bg-red-700"}`}
+            data-testid="delete-btn"
           >
+            {loading && (
+              <ClipLoader
+                color={"#ffffff"}
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            )}
             {t("common.delete")}
           </button>
         </AlertDialogFooter>

@@ -27,6 +27,7 @@ type ComboBoxProps = {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
 };
 
 const ComboBox = ({
@@ -35,15 +36,18 @@ const ComboBox = ({
   onChange,
   placeholder,
   className = "w-full",
+  disabled,
 }: ComboBoxProps) => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const selectedLabel = options.find((opt) => opt.value === value)?.label;
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={disabled ? false : open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button
+          data-testid="user-combobox-trigger"
+          disabled={disabled}
           aria-expanded={open}
           className={cn(
             className,
@@ -51,14 +55,19 @@ const ComboBox = ({
           )}
         >
           <span className="w-full truncate text-left text-sm">
-            {selectedLabel?.toLocaleLowerCase() || placeholder || t("common.selectOption")}
+            {selectedLabel?.toLocaleLowerCase() ||
+              placeholder ||
+              t("common.selectOption")}
           </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </button>
       </PopoverTrigger>
       <PopoverContent className={cn(className, "p-0")}>
         <Command>
-          <CommandInput placeholder={t("common.searchPlaceholder")} className="h-9" />
+          <CommandInput
+            placeholder={t("common.searchPlaceholder")}
+            className="h-9"
+          />
           <CommandList>
             <CommandEmpty>{t("common.noMatch")}</CommandEmpty>
             <CommandGroup>
@@ -66,6 +75,7 @@ const ComboBox = ({
                 <CommandItem
                   key={opt.value}
                   value={opt.value}
+                  data-testid={`user-option-${opt.value}`}
                   className="capitalize"
                   onSelect={() => {
                     onChange(opt.value);

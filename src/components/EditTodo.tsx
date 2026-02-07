@@ -20,6 +20,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { ClipLoader } from "react-spinners";
 
 type EditTodoProps = {
   todo: {
@@ -36,6 +37,8 @@ const EditTodo = ({ todo }: EditTodoProps) => {
 
   const [todoText, setTodoText] = useState(todo.todo);
   const [completed, setCompleted] = useState(todo.completed);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const userList = useSelector((state: RootState) => state.user.list);
 
@@ -50,21 +53,19 @@ const EditTodo = ({ todo }: EditTodoProps) => {
     }
   }, [dispatch, userList.length]);
 
-  const handleUpdateTodo = () => {
+  const handleUpdateTodo = async () => {
     if (!todoText.trim()) return;
-
-    dispatch(
-      updateTodo({
-        id: todo.id,
-        completed,
-      }) as any,
-    );
+    setLoading(true);
+    try {
+      await dispatch(updateTodo({ id: todo.id, completed }) as any);
+      setOpen(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const isDisabled = !todoText.trim();
-
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <div className="text-done bg-done/10 border-done/10 flex items-center gap-1 rounded-lg border p-1 px-2">
           <HugeiconsIcon icon={TaskEdit01Icon} size={17} />
@@ -105,13 +106,18 @@ const EditTodo = ({ todo }: EditTodoProps) => {
 
           <button
             onClick={handleUpdateTodo}
-            disabled={isDisabled}
-            className={`rounded-lg px-4 py-1.5 text-sm text-white ${
-              isDisabled
-                ? "cursor-not-allowed bg-gray-400"
-                : "bg-special hover:bg-special/90"
-            }`}
+            disabled={loading}
+            className={`flex items-center gap-2 rounded-lg px-4 py-1.5 text-sm text-white ${loading ? "cursor-not-allowed bg-gray-400" : "bg-special hover:bg-special/90"}`}
+            data-testid="update-btn"
           >
+            {loading && (
+              <ClipLoader
+                color={"#ffffff"}
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            )}
             {t("common.update")}
           </button>
         </AlertDialogFooter>

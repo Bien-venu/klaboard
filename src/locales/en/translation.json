@@ -102,6 +102,14 @@
     "status": {
       "low": "Low",
       "high": "High"
+    },
+    "pagination": {
+      "goToFirstPage": "Go to first page",
+      "goToPrevPage": "Go to previous page",
+      "goToNextPage": "Go to next page",
+      "goToLastPage": "Go to last page",
+      "pageOf": "Page {{index}} of {{count}}",
+      "selection": "{{selected}} of {{total}} row(s) selected."
     }
   },
   "productivity": {
@@ -109,8 +117,33 @@
     "description": "Boost your task management with advanced tools & features.",
     "upgrade": "Upgrade"
   },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "brand": {
+    "name": "Klaboard",
+    "alt": "Klaboard"
+  },
+  "ui": {
+    "sidebarToggle": "Toggle Sidebar",
+    "dialogClose": "Close",
+    "sheetClose": "Close",
+    "breadcrumbMore": "More"
+  },
   "language": {
     "english": "English",
-    "french": "Français"
+    "french": "Français",
+    "switcher": "Switcher"
+  },
+  "messages": {
+    "taskAddedSuccess": "Task has been added successfully.",
+    "taskUpdatedSuccess": "Task has been updated successfully.",
+    "taskDeletedSuccess": "Task has been deleted successfully."
+  },
+  "errors": {
+    "todoNotFoundById": "Todo with this id not found"
   }
 }
