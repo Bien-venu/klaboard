@@ -74,7 +74,7 @@ const DeleteTodo = ({ todo }: DeleteTodoProps) => {
           <button
             onClick={handleDeleteTodo}
             disabled={loading}
-            className={`flex items-center gap-2 rounded-lg bg-red-600 px-4 py-1.5 text-sm text-white ${loading ? "cursor-not-allowed opacity-70" : "hover:bg-red-700"}`}
+            className={`flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm text-white ${loading ? "cursor-not-allowed opacity-70" : "hover:bg-red-700"}`}
             data-testid="delete-btn"
           >
             {loading && (

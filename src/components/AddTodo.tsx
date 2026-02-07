@@ -118,7 +118,7 @@ const AddTodos = () => {
           <button
             onClick={handleAddTodo}
             disabled={isDisabled}
-            className={`!disabled:cursor-pointer flex items-center gap-2 rounded-lg px-4 py-1.5 text-sm text-white ${isDisabled ? "cursor-not-allowed bg-gray-400" : "bg-special hover:bg-special/90"}`}
+            className={`!disabled:cursor-pointer flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm text-white ${isDisabled ? "cursor-not-allowed bg-gray-400" : "bg-special hover:bg-special/90"}`}
             data-testid="add-todo-btn"
           >
             {loading && (

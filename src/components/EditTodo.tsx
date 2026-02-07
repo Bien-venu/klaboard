@@ -107,7 +107,7 @@ const EditTodo = ({ todo }: EditTodoProps) => {
           <button
             onClick={handleUpdateTodo}
             disabled={loading}
-            className={`flex items-center gap-2 rounded-lg px-4 py-1.5 text-sm text-white ${loading ? "cursor-not-allowed bg-gray-400" : "bg-special hover:bg-special/90"}`}
+            className={`flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm text-white ${loading ? "cursor-not-allowed bg-gray-400" : "bg-special hover:bg-special/90"}`}
             data-testid="update-btn"
           >
             {loading && (
