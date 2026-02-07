@@ -8,8 +8,6 @@ import type {
   ThemeName,
 } from "../../../types/testing";
 
-// no redux needed for this mocked component
-
 jest.mock("../theme-provider", () => ({
   __esModule: true,
   ThemeProvider: ({ children }: ChildrenProps) => <div>{children}</div>,
@@ -58,7 +56,6 @@ describe("ThemeToggle", () => {
     expect(document.documentElement.classList.contains("dark")).toBe(true);
 
     await user.click(screen.getByText("System"));
-    // either 'dark' or 'light' depending on media, but class exists
     expect(
       document.documentElement.classList.contains("light") ||
         document.documentElement.classList.contains("dark"),

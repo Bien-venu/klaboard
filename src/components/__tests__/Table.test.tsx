@@ -5,8 +5,6 @@ import userEvent from "@testing-library/user-event";
 import { Tables } from "../Table";
 import type { ChildrenProps, TFunction } from "../../../types/testing";
 
-// no redux needed for this mocked component
-
 jest.mock("../theme-provider", () => ({
   __esModule: true,
   ThemeProvider: ({ children }: ChildrenProps) => <div>{children}</div>,

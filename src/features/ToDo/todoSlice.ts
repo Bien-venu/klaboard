@@ -37,12 +37,23 @@ const todoSlice = createSlice({
         state.todos.push(action.payload);
       })
 
-      .addCase(updateTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
-        const index = state.todos.findIndex((t) => t.id === action.payload.id);
-        if (index !== -1) {
-          state.todos[index] = action.payload;
-        }
-      })
+      .addCase(
+        updateTodo.fulfilled,
+        (
+          state,
+          action: PayloadAction<Partial<Todo> & { id: number | string }>,
+        ) => {
+          const index = state.todos.findIndex(
+            (t) => t.id === action.payload.id,
+          );
+          if (index !== -1) {
+            state.todos[index] = {
+              ...state.todos[index],
+              ...action.payload,
+            };
+          }
+        },
+      )
 
       .addCase(deleteTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
         state.todos = state.todos.filter((t) => t.id !== action.payload.id);

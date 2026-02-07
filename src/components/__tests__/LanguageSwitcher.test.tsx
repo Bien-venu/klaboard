@@ -3,8 +3,6 @@ import userEvent from "@testing-library/user-event";
 import LanguageSwitcher from "../LanguageSwitcher";
 import type { ChildrenProps, TFunction } from "../../../types/testing";
 
-// no redux needed for mocked component
-
 jest.mock("../theme-provider", () => ({
   __esModule: true,
   ThemeProvider: ({ children }: ChildrenProps) => <div>{children}</div>,

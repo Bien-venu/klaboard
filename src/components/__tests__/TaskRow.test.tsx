@@ -4,8 +4,6 @@ import { render, screen } from "@testing-library/react";
 import TaskRow from "../TaskRow";
 import type { ChildrenProps } from "../../../types/testing";
 
-// no redux needed for mocked component
-
 jest.mock("../theme-provider", () => ({
   __esModule: true,
   ThemeProvider: ({ children }: ChildrenProps) => <div>{children}</div>,

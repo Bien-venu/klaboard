@@ -40,8 +40,6 @@ type FilterProps = {
 import { useTranslation } from "react-i18next";
 import AddTodos from "./AddTodo";
 
-// ... existing imports ...
-
 const Filter: React.FC<FilterProps> = ({ filter, setFilter }) => {
   const { t } = useTranslation();
 

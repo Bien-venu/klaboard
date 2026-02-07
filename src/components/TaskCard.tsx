@@ -34,10 +34,9 @@ import { useTranslation } from "react-i18next";
 import EditTodo from "./EditTodo";
 import DeleteTodo from "./Delete";
 
-const TaskCard: React.FC<{ task: TodoItem; column: ColumnType }> = ({
-  task,
-  column,
-}) => {
+const TaskCard: React.FC<
+  { task: TodoItem; column: ColumnType } & React.HTMLAttributes<HTMLDivElement>
+> = ({ task, column, ...rest }) => {
   const { t } = useTranslation();
   const {
     attributes,
@@ -84,6 +83,7 @@ const TaskCard: React.FC<{ task: TodoItem; column: ColumnType }> = ({
       ref={setNodeRef}
       style={style}
       {...attributes}
+      {...rest}
       className="border-text/10 bg-foreground mb-2 flex cursor-grab flex-col gap-3 rounded-md border py-3 shadow-xs"
     >
       <div {...listeners} className="flex flex-col gap-1">

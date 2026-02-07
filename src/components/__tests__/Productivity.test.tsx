@@ -3,8 +3,6 @@ import { render, screen } from "@testing-library/react";
 import Productivity from "../Productivity";
 import type { ChildrenProps, TFunction } from "../../../types/testing";
 
-// remove unused fake store to satisfy TypeScript strict unused locals
-
 jest.mock("../theme-provider", () => ({
   __esModule: true,
   ThemeProvider: ({ children }: ChildrenProps) => <div>{children}</div>,

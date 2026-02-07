@@ -35,7 +35,6 @@ const users: {
   },
 ];
 
-// Theme colors for priority
 const priorityColors: Record<string, string> = {
   High: "bg-error border-error",
   Medium: "bg-review border-review",
@@ -52,13 +51,12 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
     "Low",
   ];
 
-  // Assign each todo a unique date, time, and priority
   const eventsWithDates = todoList.map((t, index) => {
     const startDate = new Date(today);
-    startDate.setDate(today.getDate() + index); // each todo on a different day
-    startDate.setHours(7 + (index % 8), 0, 0, 0); // start time: 9AM + index hours
+    startDate.setDate(today.getDate() + index); 
+    startDate.setHours(7 + (index % 8), 0, 0, 0);
     const endDate = new Date(startDate);
-    endDate.setHours(startDate.getHours() + 1); // 1-hour duration
+    endDate.setHours(startDate.getHours() + 1); 
 
     const priority = t.priority ?? priorityOrder[index % priorityOrder.length];
 
@@ -184,7 +182,6 @@ const Calendar: React.FC<{ todoList: TodoItem[] }> = ({ todoList }) => {
             </div>
           );
         }}
-        // Sticky header
         headerToolbar={{
           left: "dayGridMonth,timeGridWeek,timeGridDay",
           right: "today,prev,next",

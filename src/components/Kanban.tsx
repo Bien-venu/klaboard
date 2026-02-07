@@ -44,13 +44,11 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
 
     const fromColumn = active.data.current?.column as ColumnType;
 
-    // 👇 THIS is the missing logic
     const toColumn =
       (over.data.current?.column as ColumnType) ?? (over.id as ColumnType);
 
     if (!fromColumn || !toColumn) return;
 
-    // SAME COLUMN → reorder
     if (fromColumn === toColumn) {
       const items = tasks[fromColumn];
       const oldIndex = items.findIndex((i) => i.id === active.id);
@@ -65,7 +63,6 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
       return;
     }
 
-    // DIFFERENT COLUMN → move
     const fromItems = [...tasks[fromColumn]];
     const toItems = [...tasks[toColumn]];
 
@@ -76,7 +73,6 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
 
     const overIndex = toItems.findIndex((i) => i.id === over.id);
 
-    // 👇 drop on empty column → push to end
     if (overIndex === -1) {
       toItems.push(movedItem);
     } else {
@@ -142,7 +138,7 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
         onDragOver={handleDragOver}
         onDragEnd={(event) => {
           handleDragEnd(event);
-          setActiveTask(null); // clear overlay
+          setActiveTask(null); 
         }}
       >
         <div className="grid min-w-[1000px] grid-cols-4 gap-4">
@@ -151,7 +147,6 @@ const Kanban: React.FC<KanbanProps> = ({ todoList }) => {
           ))}
         </div>
 
-        {/* DragOverlay should be OUTSIDE the lists */}
         <DragOverlay>
           {activeTask ? (
             <TaskCard task={activeTask} column={activeTask.column} />
@@ -236,8 +231,13 @@ const Column: React.FC<{
           items={tasks.map((t) => t.id)}
           strategy={rectSortingStrategy}
         >
-          {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} column={id} />
+          {tasks.map((task, index) => (
+            <TaskCard
+              key={index}
+              task={task}
+              column={id}
+              data-testid="todo-item"
+            />
           ))}
         </SortableContext>
       </div>

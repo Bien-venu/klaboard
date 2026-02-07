@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /// <reference path="../types/node-compat.d.ts" />
 import type { ReactElement, ReactNode } from "react";
 import { render } from "@testing-library/react";

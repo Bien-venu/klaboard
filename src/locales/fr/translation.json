@@ -102,6 +102,14 @@
     "status": {
       "low": "Faible",
       "high": "Élevé"
+    },
+    "pagination": {
+      "goToFirstPage": "Aller à la première page",
+      "goToPrevPage": "Aller à la page précédente",
+      "goToNextPage": "Aller à la page suivante",
+      "goToLastPage": "Aller à la dernière page",
+      "pageOf": "Page {{index}} sur {{count}}",
+      "selection": "{{selected}} sur {{total}} ligne(s) sélectionnée(s)."
     }
   },
   "productivity": {
@@ -109,8 +117,33 @@
     "description": "Améliorez votre gestion des tâches avec des outils et fonctionnalités avancés.",
     "upgrade": "Mettre à niveau"
   },
+  "theme": {
+    "toggle": "Basculer le thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "brand": {
+    "name": "Klaboard",
+    "alt": "Klaboard"
+  },
+  "ui": {
+    "sidebarToggle": "Basculer la barre latérale",
+    "dialogClose": "Fermer",
+    "sheetClose": "Fermer",
+    "breadcrumbMore": "Plus"
+  },
   "language": {
     "english": "Anglais",
-    "french": "Français"
+    "french": "Français",
+    "switcher": "Sélecteur"
+  },
+  "messages": {
+    "taskAddedSuccess": "La tâche a été ajoutée avec succès.",
+    "taskUpdatedSuccess": "La tâche a été mise à jour avec succès.",
+    "taskDeletedSuccess": "La tâche a été supprimée avec succès."
+  },
+  "errors": {
+    "todoNotFoundById": "Todo with this id not found"
   }
 }

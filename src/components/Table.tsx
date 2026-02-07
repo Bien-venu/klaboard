@@ -299,7 +299,6 @@ export function Tables({
         </div>
       </div>
 
-      {/* ✅ Table */}
       <div className="border-text/10 h-full overflow-y-auto rounded-lg border">
         <Table>
           <TableHeader className="sticky top-0 z-10 backdrop-blur">
@@ -351,7 +350,6 @@ export function Tables({
         </Table>
       </div>
 
-      {/* ✅ Pagination */}
       <div className="flex flex-wrap items-center justify-between px-4">
         <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}

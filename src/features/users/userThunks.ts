@@ -17,7 +17,7 @@ export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (_, thunkAPI) => {
     try {
-      return await getUsersService(); // always skip=0, limit=30
+      return await getUsersService();
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
